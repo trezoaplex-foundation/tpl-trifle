@@ -1,17 +1,17 @@
 use crate::*;
 use borsh::BorshSerialize;
-use mpl_token_metadata::{
+use tpl_token_metadata::{
     id,
     instruction::{self, MetadataInstruction, MintNewEditionFromMasterEditionViaTokenArgs},
     state::{EDITION, EDITION_MARKER_BIT_SIZE, PREFIX},
 };
-use solana_program::{
+use trezoa_program::{
     borsh::try_from_slice_unchecked,
     instruction::{AccountMeta, Instruction},
     sysvar,
 };
-use solana_program_test::BanksClientError;
-use solana_sdk::{
+use trezoa_program_test::BanksClientError;
+use trezoa_sdk::{
     pubkey::Pubkey, signature::Signer, signer::keypair::Keypair, transaction::Transaction,
 };
 use spl_associated_token_account::{
@@ -32,7 +32,7 @@ pub struct EditionMarker {
     pub metadata_token_pubkey: Pubkey,
 }
 
-impl EditionMarker {
+itpl EditionMarker {
     pub fn new(metadata: &Metadata, master_edition: &MasterEditionV2, edition: u64) -> Self {
         let mint = Keypair::new();
         let mint_pubkey = mint.pubkey();
@@ -80,7 +80,7 @@ impl EditionMarker {
     pub async fn get_data(
         &self,
         context: &mut ProgramTestContext,
-    ) -> mpl_token_metadata::state::EditionMarker {
+    ) -> tpl_token_metadata::state::EditionMarker {
         let account = get_account(context, &self.pubkey).await;
         try_from_slice_unchecked(&account.data).unwrap()
     }
@@ -136,7 +136,7 @@ impl EditionMarker {
             .banks_client
             .process_transaction_with_commitment(
                 tx,
-                solana_sdk::commitment_config::CommitmentLevel::Confirmed,
+                trezoa_sdk::commitment_config::CommitmentLevel::Confirmed,
             )
             .await
     }
@@ -146,7 +146,7 @@ impl EditionMarker {
         context: &mut ProgramTestContext,
     ) -> Result<(), BanksClientError> {
         let fake_token_program = Keypair::new();
-        let program_id = mpl_token_metadata::id();
+        let program_id = tpl_token_metadata::id();
 
         let edition_number = self.edition.checked_div(EDITION_MARKER_BIT_SIZE).unwrap();
         let as_string = edition_number.to_string();
@@ -174,7 +174,7 @@ impl EditionMarker {
             AccountMeta::new_readonly(context.payer.pubkey(), false),
             AccountMeta::new_readonly(self.metadata_pubkey, false),
             AccountMeta::new_readonly(fake_token_program.pubkey(), false),
-            AccountMeta::new_readonly(solana_program::system_program::id(), false),
+            AccountMeta::new_readonly(trezoa_program::system_program::id(), false),
             AccountMeta::new_readonly(sysvar::rent::id(), false),
         ];
 
@@ -210,11 +210,11 @@ impl EditionMarker {
             &context.payer.pubkey(),
             new_owner,
             &self.mint.pubkey(),
-            &spl_token::ID,
+            &tpl_token::ID,
         );
 
-        let transfer_ix = spl_token::instruction::transfer(
-            &spl_token::id(),
+        let transfer_ix = tpl_token::instruction::transfer(
+            &tpl_token::id(),
             &self.token.pubkey(),
             &new_owner_token_account,
             &context.payer.pubkey(),

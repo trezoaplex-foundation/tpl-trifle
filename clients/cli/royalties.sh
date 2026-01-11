@@ -3,11 +3,11 @@ set -x
 
 echo $'\n\n>>>Creating accounts'
 KEY1=./1.json
-solana-keygen new -s -o $KEY1 --no-bip39-passphrase --force
-ADDR1=`solana-keygen pubkey $KEY1`
+trezoa-keygen new -s -o $KEY1 --no-bip39-passphrase --force
+ADDR1=`trezoa-keygen pubkey $KEY1`
 
-echo $'\n\n>>>Setting up accounts with NFTs and SOL'
-solana airdrop -ul 2 "$ADDR1"
+echo $'\n\n>>>Setting up accounts with NFTs and TRZ'
+trezoa airdrop -ul 2 "$ADDR1"
 
 MODEL="test"
 SLOT="first"

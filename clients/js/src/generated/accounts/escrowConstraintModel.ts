@@ -18,7 +18,7 @@ import {
   assertAccountExists,
   deserializeAccount,
   gpaBuilder,
-} from '@metaplex-foundation/umi';
+} from '@trezoaplex-foundation/umi';
 import {
   EscrowConstraint,
   EscrowConstraintArgs,
@@ -150,7 +150,7 @@ export function getEscrowConstraintModelGpaBuilder(
 ) {
   const s = context.serializer;
   const programId = context.programs.getPublicKey(
-    'mplTrifle',
+    'tplTrifle',
     'trifMWutwBxkSuatmpPVnEe7NoE3BJKgjVi8sSyoXWX'
   );
   return gpaBuilder(context, programId)

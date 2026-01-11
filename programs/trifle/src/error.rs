@@ -1,6 +1,6 @@
-use mpl_token_metadata::solana_program::msg;
+use tpl_token_metadata::trezoa_program::msg;
 use num_derive::FromPrimitive;
-use solana_program::{
+use trezoa_program::{
     decode_error::DecodeError,
     program_error::{PrintProgramError, ProgramError},
 };
@@ -105,19 +105,19 @@ pub enum TrifleError {
     KeyMismatch,
 }
 
-impl From<TrifleError> for ProgramError {
+itpl From<TrifleError> for ProgramError {
     fn from(e: TrifleError) -> Self {
         ProgramError::Custom(e as u32)
     }
 }
 
-impl PrintProgramError for TrifleError {
+itpl PrintProgramError for TrifleError {
     fn print<E>(&self) {
         msg!(&self.to_string());
     }
 }
 
-impl<T> DecodeError<T> for TrifleError {
+itpl<T> DecodeError<T> for TrifleError {
     fn type_of() -> &'static str {
         "Metadata Error"
     }

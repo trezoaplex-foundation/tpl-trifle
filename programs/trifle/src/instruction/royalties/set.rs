@@ -1,5 +1,5 @@
 use borsh::{BorshDeserialize, BorshSerialize};
-use solana_program::{
+use trezoa_program::{
     instruction::{AccountMeta, Instruction},
     pubkey::Pubkey,
     sysvar,
@@ -27,7 +27,7 @@ pub fn set_royalties(
         AccountMeta::new(*escrow_constraint_model, false),
         AccountMeta::new(*payer, true),
         AccountMeta::new_readonly(*update_authority, false),
-        AccountMeta::new_readonly(solana_program::system_program::id(), false),
+        AccountMeta::new_readonly(trezoa_program::system_program::id(), false),
         AccountMeta::new_readonly(sysvar::instructions::id(), false),
     ];
 

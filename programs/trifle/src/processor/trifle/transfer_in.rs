@@ -1,10 +1,10 @@
 use borsh::{BorshDeserialize, BorshSerialize};
-use mpl_token_metadata::{
+use tpl_token_metadata::{
     state::{EscrowAuthority, Metadata, TokenMetadataAccount, ESCROW_POSTFIX, PREFIX},
     utils::is_print_edition,
 };
-use mpl_utils::{assert_derivation, assert_owned_by, assert_signer, token::assert_holder};
-use solana_program::{
+use tpl_utils::{assert_derivation, assert_owned_by, assert_signer, token::assert_holder};
+use trezoa_program::{
     account_info::{next_account_info, AccountInfo},
     entrypoint::ProgramResult,
     msg,
@@ -13,7 +13,7 @@ use solana_program::{
     program_pack::Pack,
     pubkey::Pubkey,
 };
-use spl_token::state::{Account, Mint};
+use tpl_token::state::{Account, Mint};
 
 use crate::{
     error::TrifleError,
@@ -22,7 +22,7 @@ use crate::{
         escrow_constraints::{EscrowConstraintModel, EscrowConstraintType, RoyaltyInstruction},
         transfer_effects::TransferEffects,
         trifle::Trifle,
-        SolanaAccount, TRIFLE_SEED,
+        TrezoaAccount, TRIFLE_SEED,
     },
     util::{pay_royalties, resize_or_reallocate_account_raw},
 };
@@ -53,25 +53,25 @@ pub fn transfer_in(
     let _associated_token_account_program_info = next_account_info(account_info_iter)?;
     let token_metadata_program_info = next_account_info(account_info_iter)?;
 
-    if token_metadata_program_info.key != &mpl_token_metadata::ID {
-        return Err(solana_program::program_error::ProgramError::IncorrectProgramId);
+    if token_metadata_program_info.key != &tpl_token_metadata::ID {
+        return Err(trezoa_program::program_error::ProgramError::IncorrectProgramId);
     }
 
     // Account validation
     assert_signer(payer_info)?;
     assert_owned_by(
         attribute_metadata_info,
-        &mpl_token_metadata::ID,
+        &tpl_token_metadata::ID,
         TrifleError::IncorrectOwner,
     )?;
     assert_owned_by(
         escrow_token_info,
-        &spl_token::ID,
+        &tpl_token::ID,
         TrifleError::IncorrectOwner,
     )?;
     assert_owned_by(
         escrow_mint_info,
-        &spl_token::ID,
+        &tpl_token::ID,
         TrifleError::IncorrectOwner,
     )?;
 
@@ -197,7 +197,7 @@ pub fn transfer_in(
     // If burn is not set, create an ATA for the incoming token and perform the transfer.
     if !transfer_effects.burn() {
         // Only try to create the ATA if the account doesn't already exist.
-        if *attribute_dst_token_info.owner != spl_token::ID
+        if *attribute_dst_token_info.owner != tpl_token::ID
             && attribute_dst_token_info.lamports() == 0
         {
             // Allocate the escrow accounts new ATA.
@@ -206,7 +206,7 @@ pub fn transfer_in(
                     payer_info.key,
                     escrow_info.key,
                     attribute_mint_info.key,
-                    &spl_token::ID,
+                    &tpl_token::ID,
                 );
 
             invoke(
@@ -223,7 +223,7 @@ pub fn transfer_in(
         } else {
             // If an existing token account is passed in, we need to validate it.
             let attribute_dst =
-                spl_token::state::Account::unpack(&attribute_dst_token_info.data.borrow())?;
+                tpl_token::state::Account::unpack(&attribute_dst_token_info.data.borrow())?;
 
             assert!(attribute_dst.mint == *attribute_mint_info.key);
             assert!(attribute_dst.delegate.is_none());
@@ -231,8 +231,8 @@ pub fn transfer_in(
         }
 
         // Transfer the token from the current owner into the escrow.
-        let transfer_ix = spl_token::instruction::transfer(
-            &spl_token::id(),
+        let transfer_ix = tpl_token::instruction::transfer(
+            &tpl_token::id(),
             attribute_src_token_info.key,
             attribute_dst_token_info.key,
             payer_info.key,
@@ -269,8 +269,8 @@ pub fn transfer_in(
         };
 
         // Burn the token from the current owner.
-        let burn_ix = mpl_token_metadata::instruction::burn_nft(
-            mpl_token_metadata::id(),
+        let burn_ix = tpl_token_metadata::instruction::burn_nft(
+            tpl_token_metadata::id(),
             *attribute_metadata_info.key,
             *payer_info.key,
             *attribute_mint_info.key,
@@ -306,8 +306,8 @@ pub fn transfer_in(
             return Err(TrifleError::FreezeAuthorityNotSet.into());
         }
 
-        let freeze_ix = mpl_token_metadata::instruction::freeze_delegated_account(
-            mpl_token_metadata::id(),
+        let freeze_ix = tpl_token_metadata::instruction::freeze_delegated_account(
+            tpl_token_metadata::id(),
             *trifle_info.key,
             *escrow_token_info.key,
             *escrow_edition_info.key,

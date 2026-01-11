@@ -2,20 +2,20 @@
 
 pub mod utils;
 
-use mpl_trifle::instruction::remove_constraint_from_escrow_constraint_model;
-use solana_program_test::*;
-use solana_sdk::{signer::Signer, transaction::Transaction};
+use tpl_trifle::instruction::remove_constraint_from_escrow_constraint_model;
+use trezoa_program_test::*;
+use trezoa_sdk::{signer::Signer, transaction::Transaction};
 use utils::*;
 
 mod trifle {
-    use mpl_trifle::{
+    use tpl_trifle::{
         instruction::{transfer_in, transfer_out},
         state::{
             escrow_constraints::EscrowConstraintModel, transfer_effects::TransferEffects,
             trifle::Trifle,
         },
     };
-    use solana_program::{borsh::try_from_slice_unchecked, program_pack::Pack};
+    use trezoa_program::{borsh::try_from_slice_unchecked, program_pack::Pack};
 
     use super::*;
 
@@ -75,7 +75,7 @@ mod trifle {
             );
 
         let transfer_in_ix = transfer_in(
-            mpl_trifle::id(),
+            tpl_trifle::id(),
             trifle_addr,
             context.payer.pubkey(),
             context.payer.pubkey(),
@@ -134,7 +134,7 @@ mod trifle {
             );
 
         let transfer_out_ix = transfer_out(
-            mpl_trifle::id(),
+            tpl_trifle::id(),
             trifle_addr,
             escrow_constraint_model_addr,
             escrow_addr,
@@ -181,7 +181,7 @@ mod trifle {
         // cannot be modified unless there are no trifles referecing it.
 
         let remove_constraint_from_model_ix = remove_constraint_from_escrow_constraint_model(
-            mpl_trifle::id(),
+            tpl_trifle::id(),
             escrow_constraint_model_addr,
             context.payer.pubkey(),
             context.payer.pubkey(),
@@ -248,7 +248,7 @@ mod trifle {
             );
 
         let transfer_in_ix = transfer_in(
-            mpl_trifle::id(),
+            tpl_trifle::id(),
             trifle_addr,
             context.payer.pubkey(),
             context.payer.pubkey(),
@@ -307,8 +307,8 @@ mod trifle {
         .await;
 
         // set the trifle program as a delegate of the base NFT's associated token account
-        let delegate_ix = spl_token::instruction::approve(
-            &spl_token::id(),
+        let delegate_ix = tpl_token::instruction::approve(
+            &tpl_token::id(),
             &metadata.token.pubkey(),
             &trifle,
             &context.payer.pubkey(),
@@ -340,7 +340,7 @@ mod trifle {
             );
 
         let transfer_in_ix = transfer_in(
-            mpl_trifle::id(),
+            tpl_trifle::id(),
             trifle,
             context.payer.pubkey(),
             context.payer.pubkey(),
@@ -379,7 +379,7 @@ mod trifle {
             .expect("query should succeed")
             .expect("account should be present");
 
-        let escrow_token = spl_token::state::Account::unpack(&escrow_token_info.data).unwrap();
+        let escrow_token = tpl_token::state::Account::unpack(&escrow_token_info.data).unwrap();
         assert!(escrow_token.is_frozen(), "escrow token should be frozen");
 
         let payer_attribute_token_account =
@@ -389,7 +389,7 @@ mod trifle {
             );
 
         let transfer_out_ix = transfer_out(
-            mpl_trifle::id(),
+            tpl_trifle::id(),
             trifle,
             escrow_constraint_model_addr,
             escrow,
@@ -427,7 +427,7 @@ mod trifle {
             .expect("query should succeed")
             .expect("account should be present");
 
-        let escrow_token = spl_token::state::Account::unpack(&escrow_token_info.data).unwrap();
+        let escrow_token = tpl_token::state::Account::unpack(&escrow_token_info.data).unwrap();
         assert!(
             !escrow_token.is_frozen(),
             "escrow token should not be frozen"

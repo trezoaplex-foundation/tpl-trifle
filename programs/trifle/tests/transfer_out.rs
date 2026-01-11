@@ -2,19 +2,19 @@
 
 pub mod utils;
 
-use solana_program_test::*;
-use solana_sdk::{signer::Signer, transaction::Transaction};
+use trezoa_program_test::*;
+use trezoa_sdk::{signer::Signer, transaction::Transaction};
 use utils::*;
 
 mod transfer_out {
-    use mpl_trifle::{
+    use tpl_trifle::{
         instruction::{transfer_in, transfer_out},
         state::{
             escrow_constraints::EscrowConstraintModel, transfer_effects::TransferEffects,
             trifle::Trifle,
         },
     };
-    use solana_program::{borsh::try_from_slice_unchecked, program_pack::Pack};
+    use trezoa_program::{borsh::try_from_slice_unchecked, program_pack::Pack};
 
     use super::*;
 
@@ -66,8 +66,8 @@ mod transfer_out {
         // Build the attribute
         let (attribute_metadata, _) = create_sft(&mut context, false, None).await;
         let sft_account_data = get_account(&mut context, &attribute_metadata.token.pubkey()).await;
-        let sft_account: spl_token::state::Account =
-            spl_token::state::Account::unpack(&sft_account_data.data).unwrap();
+        let sft_account: tpl_token::state::Account =
+            tpl_token::state::Account::unpack(&sft_account_data.data).unwrap();
         println!("sft_account: {:#?}", sft_account);
 
         let trifle_attribute_token_account =
@@ -78,7 +78,7 @@ mod transfer_out {
 
         // Do it!
         let transfer_in_ix = transfer_in(
-            mpl_trifle::id(),
+            tpl_trifle::id(),
             trifle_addr,
             context.payer.pubkey(),
             context.payer.pubkey(),
@@ -111,8 +111,8 @@ mod transfer_out {
             .expect("transfer in should succeed");
 
         let attr_account_data = get_account(&mut context, &trifle_attribute_token_account).await;
-        let attr_account: spl_token::state::Account =
-            spl_token::state::Account::unpack(&attr_account_data.data).unwrap();
+        let attr_account: tpl_token::state::Account =
+            tpl_token::state::Account::unpack(&attr_account_data.data).unwrap();
         println!("attr_account: {:#?}", attr_account);
 
         let trifle_account = context
@@ -133,7 +133,7 @@ mod transfer_out {
             );
 
         let transfer_out_ix0 = transfer_out(
-            mpl_trifle::id(),
+            tpl_trifle::id(),
             trifle_addr,
             escrow_constraint_model_addr,
             escrow_addr,
@@ -152,7 +152,7 @@ mod transfer_out {
         );
 
         let transfer_out_ix1 = transfer_out(
-            mpl_trifle::id(),
+            tpl_trifle::id(),
             trifle_addr,
             escrow_constraint_model_addr,
             escrow_addr,

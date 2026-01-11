@@ -5,9 +5,9 @@
  * See: https://github.com/metaplex-foundation/solita
  */
 
-import * as web3 from '@solana/web3.js';
-import * as beetSolana from '@metaplex-foundation/beet-solana';
-import * as beet from '@metaplex-foundation/beet';
+import * as web3 from '@trezoa/web3.js';
+import * as beetTrezoa from '@trezoaplex-foundation/beet-trezoa';
+import * as beet from '@trezoaplex-foundation/beet';
 import { Key, keyBeet } from '../types/Key';
 import { TokenAmount, tokenAmountBeet } from '../types/TokenAmount';
 
@@ -30,7 +30,7 @@ export type TrifleArgs = {
  * @category Accounts
  * @category generated
  */
-export class Trifle implements TrifleArgs {
+export class Trifle itplements TrifleArgs {
   private constructor(
     readonly key: Key,
     readonly tokenEscrow: web3.PublicKey,
@@ -87,7 +87,7 @@ export class Trifle implements TrifleArgs {
   static gpaBuilder(
     programId: web3.PublicKey = new web3.PublicKey('trifMWutwBxkSuatmpPVnEe7NoE3BJKgjVi8sSyoXWX'),
   ) {
-    return beetSolana.GpaBuilder.fromStruct(programId, trifleBeet);
+    return beetTrezoa.GpaBuilder.fromStruct(programId, trifleBeet);
   }
 
   /**
@@ -156,9 +156,9 @@ export class Trifle implements TrifleArgs {
 export const trifleBeet = new beet.FixableBeetStruct<Trifle, TrifleArgs>(
   [
     ['key', keyBeet],
-    ['tokenEscrow', beetSolana.publicKey],
+    ['tokenEscrow', beetTrezoa.publicKey],
     ['tokens', beet.map(beet.utf8String, beet.array(tokenAmountBeet))],
-    ['escrowConstraintModel', beetSolana.publicKey],
+    ['escrowConstraintModel', beetTrezoa.publicKey],
     ['padding', beet.uniformFixedSizeArray(beet.u8, 32)],
   ],
   Trifle.fromArgs,

@@ -3,7 +3,7 @@ const {
   Kinobi,
   RenderJavaScriptVisitor,
   UpdateProgramsVisitor,
-} = require("@metaplex-foundation/kinobi");
+} = require("@trezoaplex-foundation/kinobi");
 
 // Paths.
 const clientDir = path.join(__dirname, "..", "clients");
@@ -25,7 +25,7 @@ kinobi.accept(
   new RenderJavaScriptVisitor(jsDir, {
     prettier: require(path.join(clientDir, "js", ".prettierrc.json")),
     dependencyMap: {
-      mplTokenMetadata: "@metaplex-foundation/mpl-token-metadata",
+      mplTokenMetadata: "@trezoaplex-foundation/tpl-token-metadata",
     },
   })
 );

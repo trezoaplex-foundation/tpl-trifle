@@ -5,9 +5,9 @@
  * See: https://github.com/metaplex-foundation/solita
  */
 
-import * as web3 from '@solana/web3.js';
-import * as beet from '@metaplex-foundation/beet';
-import * as beetSolana from '@metaplex-foundation/beet-solana';
+import * as web3 from '@trezoa/web3.js';
+import * as beet from '@trezoaplex-foundation/beet';
+import * as beetTrezoa from '@trezoaplex-foundation/beet-trezoa';
 export type AddTokensConstraintToEscrowConstraintModelArgs = {
   constraintName: string;
   tokens: web3.PublicKey[];
@@ -23,7 +23,7 @@ export const addTokensConstraintToEscrowConstraintModelArgsBeet =
   new beet.FixableBeetArgsStruct<AddTokensConstraintToEscrowConstraintModelArgs>(
     [
       ['constraintName', beet.utf8String],
-      ['tokens', beet.array(beetSolana.publicKey)],
+      ['tokens', beet.array(beetTrezoa.publicKey)],
       ['tokenLimit', beet.u64],
       ['transferEffects', beet.u16],
     ],

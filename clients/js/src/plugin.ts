@@ -1,10 +1,10 @@
-import { mplTokenMetadata } from '@metaplex-foundation/mpl-token-metadata';
-import { UmiPlugin } from '@metaplex-foundation/umi';
+import { tplTokenMetadata } from '@trezoaplex-foundation/tpl-token-metadata';
+import { UmiPlugin } from '@trezoaplex-foundation/umi';
 import { createMplTrifleProgram } from './generated';
 
-export const mplTrifle = (): UmiPlugin => ({
+export const tplTrifle = (): UmiPlugin => ({
   install(umi) {
-    umi.use(mplTokenMetadata());
+    umi.use(tplTokenMetadata());
     umi.programs.add(createMplTrifleProgram(), false);
   },
 });

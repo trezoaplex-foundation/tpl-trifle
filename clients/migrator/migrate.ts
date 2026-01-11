@@ -1,8 +1,8 @@
 import { Command, program } from "commander";
 import log from "loglevel";
 import * as fs from "fs";
-import { clusterApiUrl, Connection, Keypair } from "@solana/web3.js";
-import { Metaplex } from "@metaplex-foundation/js";
+import { clusterApiUrl, Connection, Keypair } from "@trezoa/web3.js";
+import { Trezoaplex } from "@trezoaplex-foundation/js";
 import * as dotenv from 'dotenv';
 
 import { getMintlist, getTraitManifest } from "./helpers/parsing";
@@ -13,7 +13,7 @@ program
   .command("analyze")
   .option(
     '-e, --env <string>',
-    'Solana cluster env name',
+    'Trezoa cluster env name',
     'devnet', //mainnet-beta, testnet, devnet
   )
   .option(
@@ -22,7 +22,7 @@ program
   )
   .option(
     '-k, --keypair <path>',
-    `Solana wallet location`,
+    `Trezoa wallet location`,
     '--keypair not provided',
   )
   .option('-l, --log-level <string>', 'log level', setLogLevel)
@@ -39,7 +39,7 @@ program
       connection = new Connection(clusterApiUrl(env));
     }
 
-    const metaplex = new Metaplex(connection);
+    const metaplex = new Trezoaplex(connection);
 
     await getTraitManifest(await getMintlist(metaplex, collectionId));
   });

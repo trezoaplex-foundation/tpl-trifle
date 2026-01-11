@@ -5,10 +5,10 @@ pub mod trifle;
 use std::io::ErrorKind;
 
 use borsh::{maybestd::io::Error as BorshError, BorshDeserialize, BorshSerialize};
-use mpl_token_metadata::assertions::assert_owned_by;
+use tpl_token_metadata::assertions::assert_owned_by;
 use num_derive::FromPrimitive;
 use num_traits::FromPrimitive;
-use solana_program::{account_info::AccountInfo, program_error::ProgramError};
+use trezoa_program::{account_info::AccountInfo, program_error::ProgramError};
 
 use crate::error::TrifleError;
 
@@ -24,7 +24,7 @@ pub enum Key {
     Trifle,
 }
 
-pub trait SolanaAccount: BorshDeserialize {
+pub trait TrezoaAccount: BorshDeserialize {
     fn key() -> Key;
 
     fn size() -> usize;

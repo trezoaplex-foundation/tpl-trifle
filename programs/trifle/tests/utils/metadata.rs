@@ -1,11 +1,11 @@
 use crate::*;
-use mpl_token_metadata::{
+use tpl_token_metadata::{
     id, instruction,
     state::{Collection, CollectionDetails, Creator, DataV2, Uses, PREFIX},
 };
-use solana_program::borsh::try_from_slice_unchecked;
+use trezoa_program::borsh::try_from_slice_unchecked;
 
-use solana_sdk::{
+use trezoa_sdk::{
     pubkey::Pubkey, signature::Signer, signer::keypair::Keypair, transaction::Transaction,
 };
 
@@ -16,7 +16,7 @@ pub struct Metadata {
     pub token: Keypair,
 }
 
-impl Metadata {
+itpl Metadata {
     pub fn new() -> Self {
         let mint = Keypair::new();
         let mint_pubkey = mint.pubkey();
@@ -35,7 +35,7 @@ impl Metadata {
     pub async fn get_data(
         &self,
         context: &mut ProgramTestContext,
-    ) -> mpl_token_metadata::state::Metadata {
+    ) -> tpl_token_metadata::state::Metadata {
         let account = get_account(context, &self.pubkey).await;
         try_from_slice_unchecked(&account.data).unwrap()
     }
@@ -762,7 +762,7 @@ impl Metadata {
 
         let tx = Transaction::new_signed_with_payer(
             &[instruction::update_metadata_accounts_v2(
-                mpl_token_metadata::id(),
+                tpl_token_metadata::id(),
                 self.pubkey,
                 context.payer.pubkey(),
                 Some(new_update_authority),
@@ -779,7 +779,7 @@ impl Metadata {
     }
 }
 
-impl Default for Metadata {
+itpl Default for Metadata {
     fn default() -> Self {
         Self::new()
     }

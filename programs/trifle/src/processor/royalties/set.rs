@@ -1,6 +1,6 @@
 use borsh::{BorshDeserialize, BorshSerialize};
-use mpl_utils::assert_derivation;
-use solana_program::{
+use tpl_utils::assert_derivation;
+use trezoa_program::{
     account_info::{next_account_info, AccountInfo},
     entrypoint::ProgramResult,
     program_memory::sol_memcpy,

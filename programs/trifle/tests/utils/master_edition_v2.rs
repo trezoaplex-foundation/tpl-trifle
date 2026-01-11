@@ -1,17 +1,17 @@
 use crate::*;
 use borsh::ser::BorshSerialize;
-use mpl_token_metadata::{
+use tpl_token_metadata::{
     id,
     instruction::{self, CreateMasterEditionArgs, MetadataInstruction},
     state::{MasterEditionV2 as ProgramMasterEdition, TokenMetadataAccount, EDITION, PREFIX},
 };
-use solana_program::{
+use trezoa_program::{
     borsh::try_from_slice_unchecked,
     instruction::{AccountMeta, Instruction},
     sysvar,
 };
 
-use solana_sdk::{
+use trezoa_sdk::{
     pubkey::Pubkey,
     signature::{Keypair, Signer},
     transaction::Transaction,
@@ -24,7 +24,7 @@ pub struct MasterEditionV2 {
     pub mint_pubkey: Pubkey,
 }
 
-impl MasterEditionV2 {
+itpl MasterEditionV2 {
     pub fn new(metadata: &Metadata) -> Self {
         let program_id = id();
         let mint_pubkey = metadata.mint.pubkey();
@@ -47,7 +47,7 @@ impl MasterEditionV2 {
     pub async fn get_data(
         &self,
         context: &mut ProgramTestContext,
-    ) -> mpl_token_metadata::state::MasterEditionV2 {
+    ) -> tpl_token_metadata::state::MasterEditionV2 {
         let account = get_account(context, &self.pubkey).await;
         ProgramMasterEdition::safe_deserialize(&account.data).unwrap()
     }
@@ -55,7 +55,7 @@ impl MasterEditionV2 {
     pub async fn get_data_from_account(
         context: &mut ProgramTestContext,
         pubkey: &Pubkey,
-    ) -> mpl_token_metadata::state::MasterEditionV2 {
+    ) -> tpl_token_metadata::state::MasterEditionV2 {
         let account = get_account(context, pubkey).await;
         try_from_slice_unchecked(&account.data).unwrap()
     }
@@ -68,7 +68,7 @@ impl MasterEditionV2 {
         let fake_token_program = Keypair::new();
 
         let fake_instruction = Instruction {
-            program_id: mpl_token_metadata::id(),
+            program_id: tpl_token_metadata::id(),
             accounts: vec![
                 AccountMeta::new(self.pubkey, false),
                 AccountMeta::new(self.mint_pubkey, false),
@@ -77,7 +77,7 @@ impl MasterEditionV2 {
                 AccountMeta::new_readonly(context.payer.pubkey(), true),
                 AccountMeta::new_readonly(self.metadata_pubkey, false),
                 AccountMeta::new_readonly(fake_token_program.pubkey(), false),
-                AccountMeta::new_readonly(solana_program::system_program::id(), false),
+                AccountMeta::new_readonly(trezoa_program::system_program::id(), false),
                 AccountMeta::new_readonly(sysvar::rent::id(), false),
             ],
             data: MetadataInstruction::CreateMasterEditionV3(CreateMasterEditionArgs {

@@ -1,9 +1,9 @@
 use borsh::{BorshDeserialize, BorshSerialize};
-use mpl_token_metadata::state::{
+use tpl_token_metadata::state::{
     EscrowAuthority, Metadata, TokenMetadataAccount, ESCROW_POSTFIX, PREFIX,
 };
-use mpl_utils::{assert_derivation, assert_owned_by, assert_signer};
-use solana_program::{
+use tpl_utils::{assert_derivation, assert_owned_by, assert_signer};
+use trezoa_program::{
     account_info::{next_account_info, AccountInfo},
     entrypoint::ProgramResult,
     msg,
@@ -12,7 +12,7 @@ use solana_program::{
     program_pack::Pack,
     pubkey::Pubkey,
 };
-use spl_token::state::Account;
+use tpl_token::state::Account;
 
 use crate::{
     error::TrifleError,
@@ -21,7 +21,7 @@ use crate::{
         escrow_constraints::{EscrowConstraintModel, RoyaltyInstruction},
         transfer_effects::TransferEffects,
         trifle::Trifle,
-        SolanaAccount, TRIFLE_SEED,
+        TrezoaAccount, TRIFLE_SEED,
     },
     util::{assert_holder, pay_royalties, resize_or_reallocate_account_raw},
 };
@@ -48,17 +48,17 @@ pub fn transfer_out(
     let attribute_metadata_info = next_account_info(account_info_iter)?;
     let system_program_info = next_account_info(account_info_iter)?;
     let _ata_program_info = next_account_info(account_info_iter)?;
-    let _spl_token_program_info = next_account_info(account_info_iter)?;
+    let _tpl_token_program_info = next_account_info(account_info_iter)?;
     let token_metadata_program_info = next_account_info(account_info_iter)?;
     let sysvar_ix_account_info = next_account_info(account_info_iter)?;
 
-    if token_metadata_program_info.key != &mpl_token_metadata::ID {
-        return Err(solana_program::program_error::ProgramError::IncorrectProgramId);
+    if token_metadata_program_info.key != &tpl_token_metadata::ID {
+        return Err(trezoa_program::program_error::ProgramError::IncorrectProgramId);
     }
 
     assert_owned_by(
         attribute_metadata_info,
-        &mpl_token_metadata::id(),
+        &tpl_token_metadata::id(),
         TrifleError::IncorrectOwner,
     )?;
     let _attribute_metadata: Metadata = Metadata::from_account_info(attribute_metadata_info)?;
@@ -109,7 +109,7 @@ pub fn transfer_out(
     let escrow_token_account_data = Account::unpack(&escrow_token_info.data.borrow())?;
 
     // Transfer the token out of the escrow
-    let transfer_ix = mpl_token_metadata::escrow::transfer_out_of_escrow(
+    let transfer_ix = tpl_token_metadata::escrow::transfer_out_of_escrow(
         *token_metadata_program_info.key,
         *escrow_info.key,
         *escrow_metadata_info.key,
@@ -210,8 +210,8 @@ pub fn transfer_out(
         if escrow_token.is_frozen() {
             msg!("Last token transferred out of escrow. Unfreezing the escrow token account.");
 
-            let thaw_ix = mpl_token_metadata::instruction::thaw_delegated_account(
-                mpl_token_metadata::id(),
+            let thaw_ix = tpl_token_metadata::instruction::thaw_delegated_account(
+                tpl_token_metadata::id(),
                 *trifle_info.key,
                 *escrow_token_info.key,
                 *escrow_edition_info.key,
@@ -225,7 +225,7 @@ pub fn transfer_out(
                     escrow_token_info.to_owned(),
                     escrow_edition_info.to_owned(),
                     escrow_mint_info.to_owned(),
-                    _spl_token_program_info.to_owned(),
+                    _tpl_token_program_info.to_owned(),
                 ],
                 &[trifle_signer_seeds],
             )?;

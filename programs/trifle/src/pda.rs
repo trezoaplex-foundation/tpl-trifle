@@ -1,5 +1,5 @@
 use crate::state::{ESCROW_SEED, FREEZE_AUTHORITY, TRIFLE_SEED};
-use solana_program::pubkey::Pubkey;
+use trezoa_program::pubkey::Pubkey;
 
 /// Trifle account PDA seeds
 ///     "trifle",

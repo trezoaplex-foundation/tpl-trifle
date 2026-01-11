@@ -1,9 +1,9 @@
 use borsh::{BorshDeserialize, BorshSerialize};
-use mpl_token_metadata::error::MetadataError;
-use mpl_utils::{
+use tpl_token_metadata::error::MetadataError;
+use tpl_utils::{
     assert_derivation, assert_owned_by, assert_signer, create_or_allocate_account_raw,
 };
-use solana_program::{
+use trezoa_program::{
     account_info::{next_account_info, AccountInfo},
     entrypoint::ProgramResult,
     msg,
@@ -66,13 +66,13 @@ pub fn create_trifle_account(program_id: &Pubkey, accounts: &[AccountInfo]) -> P
     )?;
     assert_owned_by(
         metadata_info,
-        &mpl_token_metadata::ID,
+        &tpl_token_metadata::ID,
         TrifleError::IncorrectOwner,
     )?;
-    assert_owned_by(mint_info, &spl_token::id(), TrifleError::IncorrectOwner)?;
+    assert_owned_by(mint_info, &tpl_token::id(), TrifleError::IncorrectOwner)?;
     assert_owned_by(
         token_account_info,
-        &spl_token::id(),
+        &tpl_token::id(),
         TrifleError::IncorrectOwner,
     )?;
 
@@ -140,8 +140,8 @@ pub fn create_trifle_account(program_id: &Pubkey, accounts: &[AccountInfo]) -> P
         serialized_data.len(),
     );
 
-    let create_escrow_account_ix = mpl_token_metadata::escrow::create_escrow_account(
-        mpl_token_metadata::ID,
+    let create_escrow_account_ix = tpl_token_metadata::escrow::create_escrow_account(
+        tpl_token_metadata::ID,
         *escrow_info.key,
         *metadata_info.key,
         *mint_info.key,

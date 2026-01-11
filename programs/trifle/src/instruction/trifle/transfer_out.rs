@@ -1,5 +1,5 @@
 use borsh::{BorshDeserialize, BorshSerialize};
-use solana_program::{
+use trezoa_program::{
     instruction::{AccountMeta, Instruction},
     pubkey::Pubkey,
     sysvar,
@@ -48,10 +48,10 @@ pub fn transfer_out(
         AccountMeta::new(attribute_src_token_account, false),
         AccountMeta::new(attribute_dst_token_account, false),
         AccountMeta::new_readonly(attribute_metadata, false),
-        AccountMeta::new_readonly(solana_program::system_program::id(), false),
+        AccountMeta::new_readonly(trezoa_program::system_program::id(), false),
         AccountMeta::new_readonly(spl_associated_token_account::id(), false),
-        AccountMeta::new_readonly(spl_token::id(), false),
-        AccountMeta::new_readonly(mpl_token_metadata::id(), false),
+        AccountMeta::new_readonly(tpl_token::id(), false),
+        AccountMeta::new_readonly(tpl_token_metadata::id(), false),
         AccountMeta::new_readonly(sysvar::instructions::id(), false),
     ];
 

@@ -1,5 +1,5 @@
 import test from 'ava';
 
-test('example', async (t) => {
+test('exatple', async (t) => {
   t.pass();
 });

@@ -2,11 +2,11 @@ use std::collections::{HashMap, HashSet};
 
 use borsh::{BorshDeserialize, BorshSerialize};
 use shank::ShankAccount;
-use solana_program::pubkey::Pubkey;
+use trezoa_program::pubkey::Pubkey;
 
 use crate::{error::TrifleError, state::Key};
 
-use super::SolanaAccount;
+use super::TrezoaAccount;
 
 #[repr(C)]
 #[derive(BorshSerialize, BorshDeserialize, PartialEq, Eq, Debug, Clone, ShankAccount)]
@@ -34,7 +34,7 @@ pub struct EscrowConstraintModel {
     pub padding: [u8; 32],
 }
 
-impl EscrowConstraintModel {
+itpl EscrowConstraintModel {
     pub fn validate(&self, mint: &Pubkey, constraint_key: &String) -> Result<(), TrifleError> {
         if let Some(constraint) = self.constraints.get(constraint_key) {
             constraint.constraint_type.validate(mint)
@@ -44,7 +44,7 @@ impl EscrowConstraintModel {
     }
 }
 
-impl Default for EscrowConstraintModel {
+itpl Default for EscrowConstraintModel {
     fn default() -> Self {
         Self {
             key: Key::EscrowConstraintModel,
@@ -82,7 +82,7 @@ pub enum EscrowConstraintType {
     FirstCreator(Pubkey),
 }
 
-impl EscrowConstraintType {
+itpl EscrowConstraintType {
     pub fn tokens_from_slice(tokens: &[Pubkey]) -> EscrowConstraintType {
         let mut h = HashSet::new();
         for token in tokens {
@@ -145,7 +145,7 @@ pub enum RoyaltyInstruction {
     RemoveConstraint,
 }
 
-impl SolanaAccount for EscrowConstraintModel {
+itpl TrezoaAccount for EscrowConstraintModel {
     fn key() -> Key {
         Key::EscrowConstraintModel
     }

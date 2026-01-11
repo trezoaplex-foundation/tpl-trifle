@@ -5,9 +5,9 @@
  * See: https://github.com/metaplex-foundation/solita
  */
 
-import * as web3 from '@solana/web3.js';
-import * as beet from '@metaplex-foundation/beet';
-import * as beetSolana from '@metaplex-foundation/beet-solana';
+import * as web3 from '@trezoa/web3.js';
+import * as beet from '@trezoaplex-foundation/beet';
+import * as beetTrezoa from '@trezoaplex-foundation/beet-trezoa';
 export type TokenAmount = {
   mint: web3.PublicKey;
   amount: beet.bignum;
@@ -19,7 +19,7 @@ export type TokenAmount = {
  */
 export const tokenAmountBeet = new beet.BeetArgsStruct<TokenAmount>(
   [
-    ['mint', beetSolana.publicKey],
+    ['mint', beetTrezoa.publicKey],
     ['amount', beet.u64],
   ],
   'TokenAmount',

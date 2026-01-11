@@ -1,6 +1,6 @@
 use borsh::BorshSerialize;
-use mpl_utils::{assert_owned_by, assert_signer};
-use solana_program::{
+use tpl_utils::{assert_owned_by, assert_signer};
+use trezoa_program::{
     account_info::{next_account_info, AccountInfo},
     entrypoint::ProgramResult,
     program_memory::sol_memcpy,
@@ -12,7 +12,7 @@ use crate::{
     instruction::RemoveConstraintFromEscrowConstraintModelArgs,
     state::{
         escrow_constraints::{EscrowConstraintModel, RoyaltyInstruction},
-        SolanaAccount,
+        TrezoaAccount,
     },
     util::{pay_royalties, resize_or_reallocate_account_raw},
 };

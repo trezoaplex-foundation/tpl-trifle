@@ -1,7 +1,7 @@
 use std::str::FromStr;
 
 use borsh::{BorshDeserialize, BorshSerialize};
-use solana_program::{
+use trezoa_program::{
     instruction::{AccountMeta, Instruction},
     pubkey::Pubkey,
     sysvar,
@@ -33,7 +33,7 @@ pub fn withdraw_royalties(
             Pubkey::from_str("2Hm4qr8xLwQWoBErjQWp4sTND4p2FqyDmppxQyrkTV99").unwrap(),
             false,
         ),
-        AccountMeta::new_readonly(solana_program::system_program::id(), false),
+        AccountMeta::new_readonly(trezoa_program::system_program::id(), false),
         AccountMeta::new_readonly(sysvar::instructions::id(), false),
     ];
 

@@ -2,7 +2,7 @@ debug/
 target/
 .DS_Store
 **/.DS_Store
-.anchor/
+.trezoa/
 .amman/
 .crates/
 
@@ -19,7 +19,7 @@ yarn-error.log*
 .env
 .vscode
 .idea
-.anchor
+.trezoa
 .crates/
 
 .pnp.*

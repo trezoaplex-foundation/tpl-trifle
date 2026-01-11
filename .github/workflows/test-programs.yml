@@ -6,7 +6,7 @@ on:
       rust:
         default: ${{ vars.RUST_VERSION }}
         type: string
-      solana:
+      trezoa:
         default: ${{ vars.SOLANA_VERSION }}
         type: string
       program_matrix:
@@ -18,8 +18,8 @@ on:
         default: 1.65.0
         required: true
         type: string
-      solana:
-        description: Solana version
+      trezoa:
+        description: Trezoa version
         default: 1.13.6
         required: true
         type: string
@@ -39,19 +39,19 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install Rust
-        uses: metaplex-foundation/actions/install-rust@v1
+        uses: trezoaplex-foundation/actions/install-rust@v1
         with:
           toolchain: ${{ inputs.rust }}
 
-      - name: Install Solana
-        uses: metaplex-foundation/actions/install-solana@v1
+      - name: Install Trezoa
+        uses: trezoaplex-foundation/actions/install-trezoa@v1
         with:
-          version: ${{ inputs.solana }}
+          version: ${{ inputs.trezoa }}
           cache: ${{ env.CACHE }}
 
       - name: Cache program dependencies
         if: env.CACHE == 'true'
-        uses: metaplex-foundation/actions/cache-program@v1
+        uses: trezoaplex-foundation/actions/cache-program@v1
         with:
           folder: ./programs/${{ matrix.program }}
           key: program-${{ matrix.program }}

@@ -2,16 +2,16 @@
 
 pub mod utils;
 
-use solana_program_test::*;
-use solana_sdk::signer::Signer;
+use trezoa_program_test::*;
+use trezoa_sdk::signer::Signer;
 use utils::*;
 
 mod create_trifle {
-    use mpl_trifle::state::{
+    use tpl_trifle::state::{
         escrow_constraints::EscrowConstraintModel, transfer_effects::TransferEffects,
         trifle::Trifle,
     };
-    use solana_program::borsh::try_from_slice_unchecked;
+    use trezoa_program::borsh::try_from_slice_unchecked;
 
     use super::*;
 

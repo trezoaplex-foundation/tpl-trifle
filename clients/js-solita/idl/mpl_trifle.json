@@ -1,6 +1,6 @@
 {
   "version": "0.5.0",
-  "name": "mpl_trifle",
+  "name": "tpl_trifle",
   "instructions": [
     {
       "name": "CreateEscrowConstraintModelAccount",

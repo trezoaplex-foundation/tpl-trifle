@@ -1,9 +1,9 @@
 [package]
-name = "mpl-trifle"
+name = "tpl-trifle"
 version = "0.5.3"
-description = "Metaplex Composability Program"
-authors = ["Metaplex Developers <dev@metaplex.com>"]
-repository = "https://github.com/metaplex-foundation/mpl-trifle"
+description = "Trezoaplex Composability Program"
+authors = ["Trezoaplex Developers <dev@metaplex.com>"]
+repository = "https://github.com/metaplex-foundation/tpl-trifle"
 license-file = "../../LICENSE"
 edition = "2021"
 
@@ -17,14 +17,14 @@ test-bpf = []
 [dependencies]
 borsh = "0.9.3"
 shank = "0.0.12"
-solana-program = "~1.14.18"
-spl-token = { version = "3.5.0", features = ["no-entrypoint"] }
+trezoa-program = "~1.14.18"
+tpl-token = { version = "3.5.0", features = ["no-entrypoint"] }
 spl-associated-token-account = { version = "~1.1.2", features = [
     "no-entrypoint",
 ] }
 thiserror = "1.0.35"
-mpl-utils = "0.2.0"
-mpl-token-metadata = { version = "1.8.5", features = ["no-entrypoint"] }
+tpl-utils = "0.2.0"
+tpl-token-metadata = { version = "1.8.5", features = ["no-entrypoint"] }
 num-derive = "0.3.3"
 num-traits = "0.2.14"
 modular-bitfield = "0.11.2"
@@ -32,8 +32,8 @@ winnow = "=0.4.1"
 toml_datetime = "=0.6.1"
 
 [dev-dependencies]
-solana-sdk = "~1.14.18"
-solana-program-test = "~1.14.18"
+trezoa-sdk = "~1.14.18"
+trezoa-program-test = "~1.14.18"
 
 [profile.release]
 overflow-checks = true     # Enable integer overflow checks.

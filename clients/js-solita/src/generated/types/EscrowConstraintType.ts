@@ -5,9 +5,9 @@
  * See: https://github.com/metaplex-foundation/solita
  */
 
-import * as web3 from '@solana/web3.js';
-import * as beet from '@metaplex-foundation/beet';
-import * as beetSolana from '@metaplex-foundation/beet-solana';
+import * as web3 from '@trezoa/web3.js';
+import * as beet from '@trezoaplex-foundation/beet';
+import * as beetTrezoa from '@trezoaplex-foundation/beet-trezoa';
 /**
  * This type is used to derive the {@link EscrowConstraintType} type as well as the de/serializer.
  * However don't refer to it in your code but use the {@link EscrowConstraintType} type instead.
@@ -59,21 +59,21 @@ export const escrowConstraintTypeBeet = beet.dataEnum<EscrowConstraintTypeRecord
   [
     'Collection',
     new beet.BeetArgsStruct<EscrowConstraintTypeRecord['Collection']>(
-      [['fields', beet.fixedSizeTuple([beetSolana.publicKey])]],
+      [['fields', beet.fixedSizeTuple([beetTrezoa.publicKey])]],
       'EscrowConstraintTypeRecord["Collection"]',
     ),
   ],
   [
     'Tokens',
     new beet.FixableBeetArgsStruct<EscrowConstraintTypeRecord['Tokens']>(
-      [['fields', beet.tuple([beet.set(beetSolana.publicKey)])]],
+      [['fields', beet.tuple([beet.set(beetTrezoa.publicKey)])]],
       'EscrowConstraintTypeRecord["Tokens"]',
     ),
   ],
   [
     'FirstCreator',
     new beet.BeetArgsStruct<EscrowConstraintTypeRecord['FirstCreator']>(
-      [['fields', beet.fixedSizeTuple([beetSolana.publicKey])]],
+      [['fields', beet.fixedSizeTuple([beetTrezoa.publicKey])]],
       'EscrowConstraintTypeRecord["FirstCreator"]',
     ),
   ],

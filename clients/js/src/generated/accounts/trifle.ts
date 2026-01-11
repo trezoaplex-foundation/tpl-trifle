@@ -17,7 +17,7 @@ import {
   assertAccountExists,
   deserializeAccount,
   gpaBuilder,
-} from '@metaplex-foundation/umi';
+} from '@trezoaplex-foundation/umi';
 import {
   Key,
   KeyArgs,
@@ -120,7 +120,7 @@ export function getTrifleGpaBuilder(
 ) {
   const s = context.serializer;
   const programId = context.programs.getPublicKey(
-    'mplTrifle',
+    'tplTrifle',
     'trifMWutwBxkSuatmpPVnEe7NoE3BJKgjVi8sSyoXWX'
   );
   return gpaBuilder(context, programId)

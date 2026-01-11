@@ -12,20 +12,20 @@ import {
   Program,
   PublicKey,
   publicKey,
-} from '@metaplex-foundation/umi';
+} from '@trezoaplex-foundation/umi';
 import {
   getMplTrifleErrorFromCode,
   getMplTrifleErrorFromName,
 } from '../errors';
 
-export const MPL_TRIFLE_PROGRAM_ID = publicKey(
+export const TPL_TRIFLE_PROGRAM_ID = publicKey(
   'trifMWutwBxkSuatmpPVnEe7NoE3BJKgjVi8sSyoXWX'
 );
 
 export function createMplTrifleProgram(): Program {
   return {
-    name: 'mplTrifle',
-    publicKey: MPL_TRIFLE_PROGRAM_ID,
+    name: 'tplTrifle',
+    publicKey: TPL_TRIFLE_PROGRAM_ID,
     getErrorFromCode(code: number, cause?: Error) {
       return getMplTrifleErrorFromCode(code, this, cause);
     },
@@ -42,7 +42,7 @@ export function getMplTrifleProgram<T extends Program = Program>(
   context: Pick<Context, 'programs'>,
   clusterFilter?: ClusterFilter
 ): T {
-  return context.programs.get<T>('mplTrifle', clusterFilter);
+  return context.programs.get<T>('tplTrifle', clusterFilter);
 }
 
 export function getMplTrifleProgramId(
@@ -50,8 +50,8 @@ export function getMplTrifleProgramId(
   clusterFilter?: ClusterFilter
 ): PublicKey {
   return context.programs.getPublicKey(
-    'mplTrifle',
-    MPL_TRIFLE_PROGRAM_ID,
+    'tplTrifle',
+    TPL_TRIFLE_PROGRAM_ID,
     clusterFilter
   );
 }

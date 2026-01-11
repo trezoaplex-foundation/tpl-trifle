@@ -52,7 +52,7 @@ pub enum TrifleInstruction {
     #[account(12, optional, writable, name = "attribute_edition", desc = "The edition account of the attribute token")]
     #[account(13, optional, writable, name = "attribute_collection_metadata", desc = "The collection metadata account of the attribute token")]
     #[account(14, name = "system_program", desc = "System program")]
-    #[account(15, name = "spl_token", desc = "Token program")]
+    #[account(15, name = "tpl_token", desc = "Token program")]
     #[account(16, name = "spl_associated_token_account", desc = "Associated token account program")]
     #[account(17, name = "token_metadata_program", desc = "Token Metadata program")]
     TransferIn(TransferInArgs),
@@ -74,7 +74,7 @@ pub enum TrifleInstruction {
     #[account(12, name="attribute_metadata", desc="The metadata of the attribute")]
     #[account(13, name="system_program", desc="The system program")]
     #[account(14, name="spl_associated_token_account", desc="The associated token account program")]
-    #[account(15, name="spl_token", desc="The spl token program")]
+    #[account(15, name="tpl_token", desc="The spl token program")]
     #[account(16, name="token_metadata_program", desc="The token metadata program")]
     #[account(17, name="sysvar_instructions", desc="Instructions sysvar account")]
     TransferOut(TransferOutArgs),

@@ -1,5 +1,5 @@
 {
-  "entryPoints": ["src/mpl-trifle.ts"],
+  "entryPoints": ["src/tpl-trifle.ts"],
   "excludeInternal": true,
   "excludePrivate": true,
   "categorizeByGroup": false,

@@ -12,7 +12,7 @@ import {
   GetDataEnumKindContent,
   PublicKey,
   Serializer,
-} from '@metaplex-foundation/umi';
+} from '@trezoaplex-foundation/umi';
 
 export type EscrowConstraintType =
   | { __kind: 'None' }

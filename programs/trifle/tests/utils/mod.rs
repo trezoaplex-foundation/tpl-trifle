@@ -7,9 +7,9 @@ pub use assert::*;
 pub use edition_marker::EditionMarker;
 pub use master_edition_v2::MasterEditionV2;
 pub use metadata::{assert_collection_size, Metadata};
-pub use mpl_token_metadata::instruction;
-use mpl_token_metadata::state::{Collection, CollectionDetails, EscrowAuthority};
-use mpl_trifle::{
+pub use tpl_token_metadata::instruction;
+use tpl_token_metadata::state::{Collection, CollectionDetails, EscrowAuthority};
+use tpl_trifle::{
     instruction::{
         add_collection_constraint_to_escrow_constraint_model,
         add_first_creator_constraint_to_escrow_constraint_model,
@@ -20,21 +20,21 @@ use mpl_trifle::{
     pda::{find_escrow_constraint_model_address, find_trifle_address},
     state::transfer_effects::TransferEffects,
 };
-use solana_program_test::*;
-use solana_sdk::{
+use trezoa_program_test::*;
+use trezoa_sdk::{
     account::Account, program_pack::Pack, pubkey::Pubkey, signature::Signer,
     signer::keypair::Keypair, system_instruction, transaction::Transaction,
 };
-use spl_token::state::Mint;
+use tpl_token::state::Mint;
 
 pub const DEFAULT_COLLECTION_DETAILS: Option<CollectionDetails> =
     Some(CollectionDetails::V1 { size: 0 });
 
 pub fn program_test() -> ProgramTest {
-    let mut test = ProgramTest::new("mpl_trifle", mpl_trifle::id(), None);
+    let mut test = ProgramTest::new("tpl_trifle", tpl_trifle::id(), None);
     test.add_program(
-        "../../test-programs/mpl_token_metadata",
-        mpl_token_metadata::id(),
+        "../../test-programs/tpl_token_metadata",
+        tpl_token_metadata::id(),
         None,
     );
     test
@@ -85,13 +85,13 @@ pub async fn burn(
 ) -> Result<(), BanksClientError> {
     let tx = Transaction::new_signed_with_payer(
         &[instruction::burn_nft(
-            mpl_token_metadata::ID,
+            tpl_token_metadata::ID,
             metadata,
             owner.pubkey(),
             mint,
             token,
             edition,
-            spl_token::ID,
+            tpl_token::ID,
             collection_metadata,
         )],
         Some(&owner.pubkey()),
@@ -119,7 +119,7 @@ pub async fn burn_edition(
 ) -> Result<(), BanksClientError> {
     let tx = Transaction::new_signed_with_payer(
         &[instruction::burn_edition_nft(
-            mpl_token_metadata::ID,
+            tpl_token_metadata::ID,
             metadata,
             owner.pubkey(),
             print_edition_mint,
@@ -129,7 +129,7 @@ pub async fn burn_edition(
             master_edition,
             print_edition,
             edition_marker,
-            spl_token::ID,
+            tpl_token::ID,
         )],
         Some(&owner.pubkey()),
         &[owner],
@@ -156,7 +156,7 @@ pub async fn mint_tokens(
 
     let tx = Transaction::new_signed_with_payer(
         &[
-            spl_token::instruction::mint_to(&spl_token::id(), mint, account, owner, &[], amount)
+            tpl_token::instruction::mint_to(&tpl_token::id(), mint, account, owner, &[], amount)
                 .unwrap(),
         ],
         Some(&context.payer.pubkey()),
@@ -180,12 +180,12 @@ pub async fn create_token_account(
             system_instruction::create_account(
                 &context.payer.pubkey(),
                 &account.pubkey(),
-                rent.minimum_balance(spl_token::state::Account::LEN),
-                spl_token::state::Account::LEN as u64,
-                &spl_token::id(),
+                rent.minimum_balance(tpl_token::state::Account::LEN),
+                tpl_token::state::Account::LEN as u64,
+                &tpl_token::id(),
             ),
-            spl_token::instruction::initialize_account(
-                &spl_token::id(),
+            tpl_token::instruction::initialize_account(
+                &tpl_token::id(),
                 &account.pubkey(),
                 mint,
                 manager,
@@ -214,12 +214,12 @@ pub async fn create_mint(
             system_instruction::create_account(
                 &context.payer.pubkey(),
                 &mint.pubkey(),
-                rent.minimum_balance(spl_token::state::Mint::LEN),
-                spl_token::state::Mint::LEN as u64,
-                &spl_token::id(),
+                rent.minimum_balance(tpl_token::state::Mint::LEN),
+                tpl_token::state::Mint::LEN as u64,
+                &tpl_token::id(),
             ),
-            spl_token::instruction::initialize_mint(
-                &spl_token::id(),
+            tpl_token::instruction::initialize_mint(
+                &tpl_token::id(),
                 &mint.pubkey(),
                 manager,
                 freeze_authority,
@@ -247,7 +247,7 @@ pub async fn create_escrow_constraint_model(
         find_escrow_constraint_model_address(&context.payer.pubkey(), "Test");
 
     let create_constraint_model_ix = create_escrow_constraint_model_account(
-        &mpl_trifle::id(),
+        &tpl_trifle::id(),
         &escrow_constraint_model_addr,
         &context.payer.pubkey(),
         &context.payer.pubkey(),
@@ -256,7 +256,7 @@ pub async fn create_escrow_constraint_model(
     );
 
     let add_none_constraint_ix = add_none_constraint_to_escrow_constraint_model(
-        &mpl_trifle::id(),
+        &tpl_trifle::id(),
         &escrow_constraint_model_addr,
         &context.payer.pubkey(),
         &context.payer.pubkey(),
@@ -266,7 +266,7 @@ pub async fn create_escrow_constraint_model(
     );
 
     let add_collection_constraint_ix = add_collection_constraint_to_escrow_constraint_model(
-        &mpl_trifle::id(),
+        &tpl_trifle::id(),
         &escrow_constraint_model_addr,
         &context.payer.pubkey(),
         &context.payer.pubkey(),
@@ -278,7 +278,7 @@ pub async fn create_escrow_constraint_model(
     );
 
     let add_tokens_constraint_ix = add_tokens_constraint_to_escrow_constraint_model(
-        &mpl_trifle::id(),
+        &tpl_trifle::id(),
         &escrow_constraint_model_addr,
         &context.payer.pubkey(),
         &context.payer.pubkey(),
@@ -289,7 +289,7 @@ pub async fn create_escrow_constraint_model(
     );
 
     let add_creator_constraint_ix = add_first_creator_constraint_to_escrow_constraint_model(
-        &mpl_trifle::id(),
+        &tpl_trifle::id(),
         &escrow_constraint_model_addr,
         &context.payer.pubkey(),
         &context.payer.pubkey(),
@@ -328,7 +328,7 @@ pub async fn create_trifle(
 ) -> (Pubkey, Pubkey) {
     let (trifle_addr, _) = find_trifle_address(&metadata.mint.pubkey(), &context.payer.pubkey());
 
-    let (escrow_addr, _) = mpl_token_metadata::processor::find_escrow_account(
+    let (escrow_addr, _) = tpl_token_metadata::processor::find_escrow_account(
         &metadata.mint.pubkey(),
         &EscrowAuthority::Creator(trifle_addr.to_owned()),
     );
@@ -339,7 +339,7 @@ pub async fn create_trifle(
     };
 
     let create_trifle_account_ix = create_trifle_account(
-        &mpl_trifle::id(),
+        &tpl_trifle::id(),
         &escrow_addr,
         &metadata.pubkey,
         &metadata.mint.pubkey(),
@@ -415,8 +415,8 @@ pub async fn create_nft(
 
         master_edition.create(context, Some(1)).await.unwrap();
 
-        let verify_collection_ix = mpl_token_metadata::instruction::verify_collection(
-            mpl_token_metadata::id(),
+        let verify_collection_ix = tpl_token_metadata::instruction::verify_collection(
+            tpl_token_metadata::id(),
             metadata.pubkey,
             context.payer.pubkey(),
             context.payer.pubkey(),
@@ -511,8 +511,8 @@ pub async fn create_sft(
             .await
             .unwrap();
 
-        let verify_collection_ix = mpl_token_metadata::instruction::verify_collection(
-            mpl_token_metadata::id(),
+        let verify_collection_ix = tpl_token_metadata::instruction::verify_collection(
+            tpl_token_metadata::id(),
             metadata.pubkey,
             context.payer.pubkey(),
             context.payer.pubkey(),

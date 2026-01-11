@@ -6,7 +6,7 @@
  * @see https://github.com/metaplex-foundation/kinobi
  */
 
-import { Context, PublicKey, Serializer } from '@metaplex-foundation/umi';
+import { Context, PublicKey, Serializer } from '@trezoaplex-foundation/umi';
 
 export type TokenAmount = { mint: PublicKey; amount: bigint };
 

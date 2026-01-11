@@ -17,7 +17,7 @@ import {
   mapSerializer,
   publicKey,
   transactionBuilder,
-} from '@metaplex-foundation/umi';
+} from '@trezoaplex-foundation/umi';
 
 // Accounts.
 export type RemoveConstraintFromEscrowConstraintModelInstructionAccounts = {
@@ -86,7 +86,7 @@ export function removeConstraintFromEscrowConstraintModel(
 
   // Program ID.
   const programId = context.programs.getPublicKey(
-    'mplTrifle',
+    'tplTrifle',
     'trifMWutwBxkSuatmpPVnEe7NoE3BJKgjVi8sSyoXWX'
   );
 

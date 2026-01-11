@@ -8,7 +8,7 @@ pub use trifle::*;
 use crate::instruction::TrifleInstruction;
 use borsh::BorshDeserialize;
 
-use solana_program::{account_info::AccountInfo, entrypoint::ProgramResult, msg, pubkey::Pubkey};
+use trezoa_program::{account_info::AccountInfo, entrypoint::ProgramResult, msg, pubkey::Pubkey};
 
 pub fn process_instruction(
     program_id: &Pubkey,

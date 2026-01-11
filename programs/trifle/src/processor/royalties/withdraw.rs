@@ -1,6 +1,6 @@
 use borsh::{BorshDeserialize, BorshSerialize};
-use mpl_utils::{assert_derivation, assert_signer};
-use solana_program::{
+use tpl_utils::{assert_derivation, assert_signer};
+use trezoa_program::{
     account_info::{next_account_info, AccountInfo},
     entrypoint::ProgramResult,
     program::invoke_signed,
@@ -86,7 +86,7 @@ pub fn withdraw_royalties(
         .try_to_vec()
         .map_err(|_| TrifleError::FailedToSerialize)?;
 
-    // Transfer the remaining balance to the Metaplex DAO. The untracked balance
+    // Transfer the remaining balance to the Trezoaplex DAO. The untracked balance
     // (account.lamports - rent - royalty_balance) is the total collected protocol fees.
     invoke_signed(
         &system_instruction::transfer(

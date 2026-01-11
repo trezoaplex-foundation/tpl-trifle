@@ -12,7 +12,7 @@ mod escrow {
         },
     };
     use borsh::BorshSerialize;
-    use solana_sdk::{signature::Keypair, signer::Signer};
+    use trezoa_sdk::{signature::Keypair, signer::Signer};
 
     #[test]
     fn test_escrow_constraints_model_len() {

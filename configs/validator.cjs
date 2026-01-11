@@ -11,7 +11,7 @@ function getExternalProgram(programName) {
 module.exports = {
   validator: {
     commitment: "processed",
-    accountsCluster: "https://api.devnet.solana.com",
+    accountsCluster: "https://api.devnet.trezoa.com",
     programs: [
       {
         label: "Trifle",
@@ -41,7 +41,7 @@ module.exports = {
     ],
     accounts: [
       {
-        label: "Metaplex Default RuleSet",
+        label: "Trezoaplex Default RuleSet",
         accountId: "eBJLFYPxJmMGKuFwpDWkzxZeUrad92kZRC5BJLpzyT9",
         executable: false,
       },

@@ -1,5 +1,5 @@
-import { PublicKey } from "@solana/web3.js";
-import { PROGRAM_ADDRESS as TM_PROGRAM_ADDRESS } from "@metaplex-foundation/mpl-token-metadata";
+import { PublicKey } from "@trezoa/web3.js";
+import { PROGRAM_ADDRESS as TM_PROGRAM_ADDRESS } from "@trezoaplex-foundation/tpl-token-metadata";
 import { PROGRAM_ADDRESS as TRIFLE_PROGRAM_ADDRESS } from "../../../js/src/generated";
 import { EscrowAuthority } from "./utils";
 

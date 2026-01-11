@@ -1,5 +1,5 @@
-import { Metadata, Metaplex, Nft } from "@metaplex-foundation/js";
-import { PublicKey } from "@solana/web3.js";
+import { Metadata, Trezoaplex, Nft } from "@trezoaplex-foundation/js";
+import { PublicKey } from "@trezoa/web3.js";
 import * as fs from "fs";
 
 const axios = require('axios')
@@ -70,7 +70,7 @@ const setMintCache = (collectionId: String, nftList: Nft[]) => {
     fs.writeFileSync(filename, JSON.stringify(nftList, null, 2));
 }
 
-export const getMintlist = async (metaplex: Metaplex, collectionId: String) => {
+export const getMintlist = async (metaplex: Trezoaplex, collectionId: String) => {
     let mintlist = getMintCache(collectionId);
     if (!mintlist) {
         const url = URL_BASE + process.env.HELIUS_API_KEY;

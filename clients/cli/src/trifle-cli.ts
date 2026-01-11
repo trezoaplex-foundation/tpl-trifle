@@ -7,18 +7,18 @@ import * as figlet from "figlet";
 import * as path from "path";
 import { Command, program } from "commander";
 import log from "loglevel";
-import * as sdk from "@metaplex-foundation/mpl-token-metadata";
-import * as web3 from "@solana/web3.js";
+import * as sdk from "@trezoaplex-foundation/tpl-token-metadata";
+import * as web3 from "@trezoa/web3.js";
 import * as fs from "fs";
-import { Keypair } from "@solana/web3.js";
+import { Keypair } from "@trezoa/web3.js";
 import {
   keypairIdentity,
-  Metaplex,
+  Trezoaplex,
   Nft,
   NftWithToken,
   Sft,
   SftWithToken,
-} from "@metaplex-foundation/js";
+} from "@trezoaplex-foundation/js";
 import { EscrowAuthority, use_metaplex } from "./helpers/utils";
 import {
   addCollectionConstraint,
@@ -36,8 +36,8 @@ import {
   findEscrowPda,
   findTriflePda,
 } from "./helpers/pdas";
-import { Key } from "@metaplex-foundation/mpl-token-metadata";
-import { PublicKeyMismatchError } from "@metaplex-foundation/mpl-auction-house";
+import { Key } from "@trezoaplex-foundation/tpl-token-metadata";
+import { PublicKeyMismatchError } from "@trezoaplex-foundation/tpl-auction-house";
 
 // TODO: show this on -h or --help
 // clear();
@@ -90,11 +90,11 @@ create
   .command("model")
   .option(
     "-e, --env <string>",
-    "Solana cluster env name",
+    "Trezoa cluster env name",
     "devnet", //mainnet-beta, testnet, devnet
   )
   .option("-r, --rpc <string>", "The endpoint to connect to.")
-  .option("-k, --keypair <path>", `Solana wallet location`)
+  .option("-k, --keypair <path>", `Trezoa wallet location`)
   .option("-l, --log-level <string>", "log level", setLogLevel)
   .option("-n, --name <string>", "The name of the constraint model.")
   .option("-s, --schema <string>", "The schema of the constraint model.")
@@ -121,11 +121,11 @@ create
   .command("trifle")
   .option(
     "-e, --env <string>",
-    "Solana cluster env name",
+    "Trezoa cluster env name",
     "devnet", //mainnet-beta, testnet, devnet
   )
   .option("-r, --rpc <string>", "The endpoint to connect to.")
-  .option("-k, --keypair <path>", `Solana wallet location`)
+  .option("-k, --keypair <path>", `Trezoa wallet location`)
   .option("-l, --log-level <string>", "log level", setLogLevel)
   .option(
     "-m, --mint <string>",
@@ -190,17 +190,17 @@ const addNoneConstraintCommand = constraintCommand
   .command("none")
   .option(
     "-e, --env <string>",
-    "Solana cluster env name",
+    "Trezoa cluster env name",
     "devnet", //mainnet-beta, testnet, devnet
   )
   .option("-r, --rpc <string>", "The endpoint to connect to.")
   .option(
     "-e, --env <string>",
-    "Solana cluster env name",
+    "Trezoa cluster env name",
     "devnet", //mainnet-beta, testnet, devnet
   )
   .option("-r, --rpc <string>", "The endpoint to connect to.")
-  .option("-k, --keypair <path>", `Solana wallet location`)
+  .option("-k, --keypair <path>", `Trezoa wallet location`)
   .option("-l, --log-level <string>", "log level", setLogLevel)
   .option("-mn, --model-name <string>", "The name of the constraint model.")
   .option("-cn --constraint-name <string>", "The name of the constraint")
@@ -249,11 +249,11 @@ const addCollectionConstraintCommand = constraintCommand
   .command("collection")
   .option(
     "-e, --env <string>",
-    "Solana cluster env name",
+    "Trezoa cluster env name",
     "devnet", //mainnet-beta, testnet, devnet
   )
   .option("-r, --rpc <string>", "The endpoint to connect to.")
-  .option("-k, --keypair <path>", `Solana wallet location`)
+  .option("-k, --keypair <path>", `Trezoa wallet location`)
   .option("-l, --log-level <string>", "log level", setLogLevel)
   .option("-mn, --model-name <string>", "The name of the constraint model.")
   .option("-cn --constraint-name <string>", "The name of the constraint")
@@ -305,17 +305,17 @@ const addTokensConstraintCommand = constraintCommand
   .command("tokens")
   .option(
     "-e, --env <string>",
-    "Solana cluster env name",
+    "Trezoa cluster env name",
     "devnet", //mainnet-beta, testnet, devnet
   )
   .option("-r, --rpc <string>", "The endpoint to connect to.")
   .option(
     "-e, --env <string>",
-    "Solana cluster env name",
+    "Trezoa cluster env name",
     "devnet", //mainnet-beta, testnet, devnet
   )
   .option("-r, --rpc <string>", "The endpoint to connect to.")
-  .option("-k, --keypair <path>", `Solana wallet location`)
+  .option("-k, --keypair <path>", `Trezoa wallet location`)
   .option("-l, --log-level <string>", "log level", setLogLevel)
   .option("-mn, --model-name <string>", "The name of the constraint model.")
   .option("-cn --constraint-name <string>", "The name of the constraint")
@@ -391,11 +391,11 @@ transfer
   .command("in")
   .option(
     "-e, --env <string>",
-    "Solana cluster env name",
+    "Trezoa cluster env name",
     "devnet", //mainnet-beta, testnet, devnet
   )
   .option("-r, --rpc <string>", "The endpoint to connect to.")
-  .option("-k, --keypair <path>", `Solana wallet location`)
+  .option("-k, --keypair <path>", `Trezoa wallet location`)
   .option("-l, --log-level <string>", "log level", setLogLevel)
   .option(
     "-m, --mint <string>",
@@ -488,11 +488,11 @@ transfer
   .command("out")
   .option(
     "-e, --env <string>",
-    "Solana cluster env name",
+    "Trezoa cluster env name",
     "devnet", //mainnet-beta, testnet, devnet
   )
   .option("-r, --rpc <string>", "The endpoint to connect to.")
-  .option("-k, --keypair <path>", `Solana wallet location`)
+  .option("-k, --keypair <path>", `Trezoa wallet location`)
   .option("-l, --log-level <string>", "log level", setLogLevel)
   .option(
     "-m, --mint <string>",
@@ -588,11 +588,11 @@ show
   .command("model")
   .option(
     "-e, --env <string>",
-    "Solana cluster env name",
+    "Trezoa cluster env name",
     "devnet", //mainnet-beta, testnet, devnet
   )
   .option("-r, --rpc <string>", "The endpoint to connect to.")
-  .option("-k, --keypair <path>", `Solana wallet location`)
+  .option("-k, --keypair <path>", `Trezoa wallet location`)
   .option("-l, --log-level <string>", "log level", setLogLevel)
   .option("-n, --name <string>", "The name if creating a new NFT.")
   .action(async (directory, cmd) => {
@@ -611,11 +611,11 @@ show
   .command("trifle")
   .option(
     "-e, --env <string>",
-    "Solana cluster env name",
+    "Trezoa cluster env name",
     "devnet", //mainnet-beta, testnet, devnet
   )
   .option("-r, --rpc <string>", "The endpoint to connect to.")
-  .option("-k, --keypair <path>", `Solana wallet location`)
+  .option("-k, --keypair <path>", `Trezoa wallet location`)
   .option("-l, --log-level <string>", "log level", setLogLevel)
   .option(
     "-m, --mint <string>",

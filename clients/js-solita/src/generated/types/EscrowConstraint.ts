@@ -5,7 +5,7 @@
  * See: https://github.com/metaplex-foundation/solita
  */
 
-import * as beet from '@metaplex-foundation/beet';
+import * as beet from '@trezoaplex-foundation/beet';
 import { EscrowConstraintType, escrowConstraintTypeBeet } from './EscrowConstraintType';
 export type EscrowConstraint = {
   tokenLimit: beet.bignum;

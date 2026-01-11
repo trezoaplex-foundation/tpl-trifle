@@ -1,5 +1,5 @@
 use borsh::{BorshDeserialize, BorshSerialize};
-use solana_program::{
+use trezoa_program::{
     instruction::{AccountMeta, Instruction},
     pubkey::Pubkey,
     sysvar,
@@ -34,7 +34,7 @@ pub fn add_collection_constraint_to_escrow_constraint_model(
         AccountMeta::new_readonly(*update_authority, true),
         AccountMeta::new_readonly(*collection_mint, false),
         AccountMeta::new_readonly(*collection_mint_metadata, false),
-        AccountMeta::new_readonly(solana_program::system_program::id(), false),
+        AccountMeta::new_readonly(trezoa_program::system_program::id(), false),
         AccountMeta::new_readonly(sysvar::instructions::id(), false),
     ];
 

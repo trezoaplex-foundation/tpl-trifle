@@ -5,9 +5,9 @@
  * See: https://github.com/metaplex-foundation/solita
  */
 
-import * as web3 from '@solana/web3.js';
-import * as beet from '@metaplex-foundation/beet';
-import * as beetSolana from '@metaplex-foundation/beet-solana';
+import * as web3 from '@trezoa/web3.js';
+import * as beet from '@trezoaplex-foundation/beet';
+import * as beetTrezoa from '@trezoaplex-foundation/beet-trezoa';
 import { Key, keyBeet } from '../types/Key';
 import { EscrowConstraint, escrowConstraintBeet } from '../types/EscrowConstraint';
 import { RoyaltyInstruction, royaltyInstructionBeet } from '../types/RoyaltyInstruction';
@@ -36,7 +36,7 @@ export type EscrowConstraintModelArgs = {
  * @category Accounts
  * @category generated
  */
-export class EscrowConstraintModel implements EscrowConstraintModelArgs {
+export class EscrowConstraintModel itplements EscrowConstraintModelArgs {
   private constructor(
     readonly key: Key,
     readonly creator: web3.PublicKey,
@@ -106,7 +106,7 @@ export class EscrowConstraintModel implements EscrowConstraintModelArgs {
   static gpaBuilder(
     programId: web3.PublicKey = new web3.PublicKey('trifMWutwBxkSuatmpPVnEe7NoE3BJKgjVi8sSyoXWX'),
   ) {
-    return beetSolana.GpaBuilder.fromStruct(programId, escrowConstraintModelBeet);
+    return beetTrezoa.GpaBuilder.fromStruct(programId, escrowConstraintModelBeet);
   }
 
   /**
@@ -206,10 +206,10 @@ export const escrowConstraintModelBeet = new beet.FixableBeetStruct<
 >(
   [
     ['key', keyBeet],
-    ['creator', beetSolana.publicKey],
+    ['creator', beetTrezoa.publicKey],
     ['name', beet.utf8String],
     ['constraints', beet.map(beet.utf8String, escrowConstraintBeet)],
-    ['updateAuthority', beetSolana.publicKey],
+    ['updateAuthority', beetTrezoa.publicKey],
     ['count', beet.u64],
     ['schemaUri', beet.coption(beet.utf8String)],
     ['royalties', beet.map(royaltyInstructionBeet, beet.u64)],

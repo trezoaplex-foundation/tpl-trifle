@@ -17,7 +17,7 @@ import {
   checkForIsWritableOverride as isWritable,
   mapSerializer,
   transactionBuilder,
-} from '@metaplex-foundation/umi';
+} from '@trezoaplex-foundation/umi';
 
 // Accounts.
 export type CreateEscrowConstraintModelAccountInstructionAccounts = {
@@ -85,7 +85,7 @@ export function createEscrowConstraintModelAccount(
 
   // Program ID.
   const programId = context.programs.getPublicKey(
-    'mplTrifle',
+    'tplTrifle',
     'trifMWutwBxkSuatmpPVnEe7NoE3BJKgjVi8sSyoXWX'
   );
 

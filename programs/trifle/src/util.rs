@@ -1,4 +1,4 @@
-use solana_program::{
+use trezoa_program::{
     account_info::AccountInfo, entrypoint::ProgramResult, instruction::AccountMeta,
     program::invoke, pubkey::Pubkey, rent::Rent, system_instruction, sysvar::Sysvar,
 };
@@ -8,7 +8,7 @@ use crate::{
     state::escrow_constraints::{fees, EscrowConstraintModel, RoyaltyInstruction},
 };
 
-/// Resize an account using realloc, lifted from Solana Cookbook
+/// Resize an account using realloc, lifted from Trezoa Cookbook
 #[inline(always)]
 pub fn resize_or_reallocate_account_raw<'a>(
     target_account: &AccountInfo<'a>,
@@ -58,7 +58,7 @@ pub fn pay_royalties<'a>(
         ],
     )?;
 
-    // Update the royalties balance on the Constraint Model minus the 10% Metaplex cut.
+    // Update the royalties balance on the Constraint Model minus the 10% Trezoaplex cut.
     model.royalty_balance += royalty
         .checked_mul(9)
         .ok_or(TrifleError::NumericalOverflow)?
@@ -74,7 +74,7 @@ pub fn is_creation_instruction(hash: u8) -> bool {
 }
 
 pub fn assert_holder(
-    token_account: &spl_token::state::Account,
+    token_account: &tpl_token::state::Account,
     account_info: &AccountInfo,
 ) -> ProgramResult {
     if token_account.owner != *account_info.key {

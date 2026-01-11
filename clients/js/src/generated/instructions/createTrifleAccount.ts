@@ -17,7 +17,7 @@ import {
   mapSerializer,
   publicKey,
   transactionBuilder,
-} from '@metaplex-foundation/umi';
+} from '@trezoaplex-foundation/umi';
 
 // Accounts.
 export type CreateTrifleAccountInstructionAccounts = {
@@ -85,7 +85,7 @@ export function createTrifleAccount(
 
   // Program ID.
   const programId = context.programs.getPublicKey(
-    'mplTrifle',
+    'tplTrifle',
     'trifMWutwBxkSuatmpPVnEe7NoE3BJKgjVi8sSyoXWX'
   );
 
@@ -101,7 +101,7 @@ export function createTrifleAccount(
   const payerAccount = input.payer ?? context.payer;
   const tokenMetadataProgramAccount = input.tokenMetadataProgram ?? {
     ...context.programs.getPublicKey(
-      'mplTokenMetadata',
+      'tplTokenMetadata',
       'metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s'
     ),
     isWritable: false,

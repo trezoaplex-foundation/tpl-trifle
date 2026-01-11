@@ -13,9 +13,9 @@
         "refresh": "rm -rf ./node_modules ./package-lock.json && yarn"
     },
     "dependencies": {
-        "@metaplex-foundation/js": "^0.17.2",
-        "@solana/spl-token": "^0.3.4",
-        "@solana/web3.js": "^1.56.2",
+        "@trezoaplex-foundation/js": "^0.17.2",
+        "@trezoa/tpl-token": "^0.3.4",
+        "@trezoa/web3.js": "^1.56.2",
         "@types/node": "^18.7.14",
         "clear": "^0.1.0",
         "commander": "^9.4.0",

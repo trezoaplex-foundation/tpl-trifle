@@ -1,15 +1,15 @@
 import os from 'os';
 import yaml from 'yaml';
-import { keypairIdentity, Metaplex } from '@metaplex-foundation/js';
-import * as web3 from '@solana/web3.js';
+import { keypairIdentity, Trezoaplex } from '@trezoaplex-foundation/js';
+import * as web3 from '@trezoa/web3.js';
 import * as fs from 'fs';
 
 export async function use_metaplex(keypair: string, env: web3.Cluster, rpc: string) {
-  const solanaConfig = loadSolanaConfigFile();
+  const trezoaConfig = loadTrezoaConfigFile();
   let connection;
 
-  const selectedRPC = rpc || solanaConfig.json_rpc_url;
-  const selectedKeypairPath = keypair || solanaConfig.keypair_path;
+  const selectedRPC = rpc || trezoaConfig.json_rpc_url;
+  const selectedKeypairPath = keypair || trezoaConfig.keypair_path;
 
   if (selectedRPC) {
     connection = new web3.Connection(selectedRPC, {
@@ -25,18 +25,18 @@ export async function use_metaplex(keypair: string, env: web3.Cluster, rpc: stri
   const keypairFile = fs.readFileSync(selectedKeypairPath);
   const wallet = web3.Keypair.fromSecretKey(Buffer.from(JSON.parse(keypairFile.toString())));
 
-  const metaplex = new Metaplex(connection);
+  const metaplex = new Trezoaplex(connection);
   // Use it in the SDK.
   metaplex.use(keypairIdentity(wallet));
 
   return metaplex;
 }
 
-export const loadSolanaConfigFile = () => {
+export const loadTrezoaConfigFile = () => {
   try {
-    const path = os.homedir() + '/.config/solana/cli/config.yml';
-    const solanaConfigFile = fs.readFileSync(path);
-    const config = yaml.parse(solanaConfigFile.toString());
+    const path = os.homedir() + '/.config/trezoa/cli/config.yml';
+    const trezoaConfigFile = fs.readFileSync(path);
+    const config = yaml.parse(trezoaConfigFile.toString());
     return config;
   } catch (e) {
     return {};

@@ -1,7 +1,7 @@
-use mpl_token_metadata::state::{Metadata, TokenMetadataAccount};
+use tpl_token_metadata::state::{Metadata, TokenMetadataAccount};
 
-use mpl_utils::assert_owned_by;
-use solana_program::{
+use tpl_utils::assert_owned_by;
+use trezoa_program::{
     account_info::{next_account_info, AccountInfo},
     entrypoint::ProgramResult,
     pubkey::Pubkey,
@@ -33,12 +33,12 @@ pub fn add_collection_constraint_to_escrow_constraint_model(
 
     assert_owned_by(
         collection_mint_info,
-        &spl_token::id(),
+        &tpl_token::id(),
         TrifleError::IncorrectOwner,
     )?;
     assert_owned_by(
         collection_metadata_info,
-        &mpl_token_metadata::id(),
+        &tpl_token_metadata::id(),
         TrifleError::IncorrectOwner,
     )?;
 

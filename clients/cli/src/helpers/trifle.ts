@@ -2,7 +2,7 @@ import {
   NftWithToken,
   SftWithToken,
   TokenMetadataProgram,
-} from "@metaplex-foundation/js";
+} from "@trezoaplex-foundation/js";
 import {
   Connection,
   Keypair,
@@ -10,7 +10,7 @@ import {
   SystemProgram,
   SYSVAR_INSTRUCTIONS_PUBKEY,
   Transaction,
-} from "@solana/web3.js";
+} from "@trezoa/web3.js";
 import {
   createAddCollectionConstraintToEscrowConstraintModelInstruction,
   createAddNoneConstraintToEscrowConstraintModelInstruction,
@@ -31,9 +31,9 @@ import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
   getAssociatedTokenAddress,
   TOKEN_PROGRAM_ID,
-} from "@solana/spl-token";
-import { findMetadataPda } from "@metaplex-foundation/js";
-import { PROGRAM_ADDRESS as TM_PROGRAM_ADDRESS } from "@metaplex-foundation/mpl-token-metadata";
+} from "@trezoa/tpl-token";
+import { findMetadataPda } from "@trezoaplex-foundation/js";
+import { PROGRAM_ADDRESS as TM_PROGRAM_ADDRESS } from "@trezoaplex-foundation/tpl-token-metadata";
 import { EscrowAuthority, map_replacer } from "./utils";
 
 export const createConstraintModel = async (

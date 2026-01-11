@@ -4,14 +4,14 @@ set -x
 echo $'\n\n>>>Creating accounts'
 KEY1=./1.json
 KEY2=./2.json
-solana-keygen new -s -o $KEY1 --no-bip39-passphrase --force
-ADDR1=`solana-keygen pubkey $KEY1`
-solana-keygen new -s -o $KEY2 --no-bip39-passphrase --force
-ADDR2=`solana-keygen pubkey $KEY2`
+trezoa-keygen new -s -o $KEY1 --no-bip39-passphrase --force
+ADDR1=`trezoa-keygen pubkey $KEY1`
+trezoa-keygen new -s -o $KEY2 --no-bip39-passphrase --force
+ADDR2=`trezoa-keygen pubkey $KEY2`
 
-echo $'\n\n>>>Setting up accounts with NFTs and SOL'
-solana airdrop -ul 2 "$ADDR1"
-solana airdrop -ul 2 "$ADDR2"
+echo $'\n\n>>>Setting up accounts with NFTs and TRZ'
+trezoa airdrop -ul 2 "$ADDR1"
+trezoa airdrop -ul 2 "$ADDR2"
 
 NFT=`metaboss mint one -r http://localhost:8899 -k $KEY2 -u https://arweave.net/N36gZYJ6PEH8OE11i0MppIbPG4VXKV4iuQw1zaq3rls | grep Mint | awk '{print $3}'`
 ITEM=`metaboss mint one -r http://localhost:8899 -k $KEY2 -u https://arweave.net/N36gZYJ6PEH8OE11i0MppIbPG4VXKV4iuQw1zaq3rls | grep Mint | awk '{print $3}'`

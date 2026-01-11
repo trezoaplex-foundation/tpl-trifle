@@ -1,5 +1,5 @@
 use borsh::{BorshDeserialize, BorshSerialize};
-use solana_program::{
+use trezoa_program::{
     instruction::{AccountMeta, Instruction},
     pubkey::Pubkey,
     system_program,
@@ -52,9 +52,9 @@ pub fn transfer_in(
         account_meta_new_or_readonly(attribute_edition, program_id),
         account_meta_new_or_readonly(attribute_collection_metadata, program_id),
         AccountMeta::new_readonly(system_program::id(), false),
-        AccountMeta::new_readonly(spl_token::id(), false),
+        AccountMeta::new_readonly(tpl_token::id(), false),
         AccountMeta::new_readonly(spl_associated_token_account::id(), false),
-        AccountMeta::new_readonly(mpl_token_metadata::id(), false),
+        AccountMeta::new_readonly(tpl_token_metadata::id(), false),
     ];
 
     let data = TrifleInstruction::TransferIn(TransferInArgs { slot, amount })

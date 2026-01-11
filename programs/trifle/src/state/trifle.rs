@@ -1,10 +1,10 @@
 use crate::{error::TrifleError, state::Key};
 use borsh::{BorshDeserialize, BorshSerialize};
 use shank::ShankAccount;
-use solana_program::pubkey::Pubkey;
+use trezoa_program::pubkey::Pubkey;
 use std::collections::HashMap;
 
-use super::{escrow_constraints::EscrowConstraint, SolanaAccount};
+use super::{escrow_constraints::EscrowConstraint, TrezoaAccount};
 
 #[derive(BorshSerialize, BorshDeserialize, PartialEq, Eq, Debug, Clone, ShankAccount)]
 pub struct Trifle {
@@ -26,13 +26,13 @@ pub struct TokenAmount {
     pub amount: u64,
 }
 
-impl TokenAmount {
+itpl TokenAmount {
     pub fn new(mint: Pubkey, amount: u64) -> Self {
         Self { mint, amount }
     }
 }
 
-impl Default for Trifle {
+itpl Default for Trifle {
     fn default() -> Self {
         Self {
             key: Key::Trifle,
@@ -44,7 +44,7 @@ impl Default for Trifle {
     }
 }
 
-impl Trifle {
+itpl Trifle {
     pub fn try_add(
         &mut self,
         constraint: &EscrowConstraint,
@@ -128,7 +128,7 @@ impl Trifle {
     }
 }
 
-impl SolanaAccount for Trifle {
+itpl TrezoaAccount for Trifle {
     fn key() -> Key {
         Key::Trifle
     }

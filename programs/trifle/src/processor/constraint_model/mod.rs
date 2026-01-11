@@ -10,10 +10,10 @@ pub use add_none_constraint::*;
 pub use add_tokens_constraint::*;
 use borsh::{BorshDeserialize, BorshSerialize};
 pub use create::*;
-use mpl_utils::{assert_derivation, assert_owned_by, assert_signer};
+use tpl_utils::{assert_derivation, assert_owned_by, assert_signer};
 pub use remove_constraint::*;
 
-use solana_program::{
+use trezoa_program::{
     account_info::{next_account_info, AccountInfo},
     entrypoint::ProgramResult,
     program_memory::sol_memcpy,

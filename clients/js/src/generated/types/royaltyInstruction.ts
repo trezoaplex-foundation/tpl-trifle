@@ -6,7 +6,7 @@
  * @see https://github.com/metaplex-foundation/kinobi
  */
 
-import { Context, Serializer } from '@metaplex-foundation/umi';
+import { Context, Serializer } from '@trezoaplex-foundation/umi';
 
 export enum RoyaltyInstruction {
   CreateModel,
