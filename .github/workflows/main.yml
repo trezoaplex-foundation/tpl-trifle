@@ -29,7 +29,7 @@ jobs:
 
       - name: Filter program matrix
         id: program_matrix
-        uses: metaplex-foundation/actions/filter-matrix@v1
+        uses: trezoaplex-foundation/actions/filter-matrix@v1
         with:
           matrix: ${{ vars.PROGRAMS }}
           changes: ${{ steps.changes.outputs.changes }}
@@ -65,7 +65,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install Node.js
-        uses: metaplex-foundation/actions/install-node-with-pnpm@v1
+        uses: trezoaplex-foundation/actions/install-node-with-pnpm@v1
         with:
           version: ${{ vars.NODE_VERSION }}
           cache: ${{ env.CACHE }}
@@ -73,7 +73,7 @@ jobs:
 
       - name: Cache IDL generators
         if: env.CACHE == 'true'
-        uses: metaplex-foundation/actions/cache-idl-generators@v1
+        uses: trezoaplex-foundation/actions/cache-idl-generators@v1
 
       - name: Generate IDLs and clients
         run: pnpm generate

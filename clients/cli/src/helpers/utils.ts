@@ -25,11 +25,11 @@ export async function use_metaplex(keypair: string, env: web3.Cluster, rpc: stri
   const keypairFile = fs.readFileSync(selectedKeypairPath);
   const wallet = web3.Keypair.fromSecretKey(Buffer.from(JSON.parse(keypairFile.toString())));
 
-  const metaplex = new Trezoaplex(connection);
+  const trezoaplex = new Trezoaplex(connection);
   // Use it in the SDK.
-  metaplex.use(keypairIdentity(wallet));
+  trezoaplex.use(keypairIdentity(wallet));
 
-  return metaplex;
+  return trezoaplex;
 }
 
 export const loadTrezoaConfigFile = () => {

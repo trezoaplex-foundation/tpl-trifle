@@ -1,5 +1,5 @@
 {
-  "version": "0.5.3",
+  "version": "0.5.0",
   "name": "tpl_trifle",
   "instructions": [
     {
@@ -358,7 +358,7 @@
           "name": "splToken",
           "isMut": false,
           "isSigner": false,
-          "desc": "The spl token program"
+          "desc": "The tpl token program"
         },
         {
           "name": "tokenMetadataProgram",
@@ -1263,21 +1263,6 @@
       "code": 20,
       "name": "InvalidFirstCreator",
       "msg": "Failed to deserialize the first creator"
-    },
-    {
-      "code": 21,
-      "name": "IncorrectOwner",
-      "msg": "Incorrect account owner"
-    },
-    {
-      "code": 22,
-      "name": "DerivedKeyInvalid",
-      "msg": "Derived key invalid"
-    },
-    {
-      "code": 23,
-      "name": "KeyMismatch",
-      "msg": "Public key does not match expected value"
     }
   ],
   "metadata": {

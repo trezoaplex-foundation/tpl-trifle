@@ -74,7 +74,7 @@ pub enum TrifleInstruction {
     #[account(12, name="attribute_metadata", desc="The metadata of the attribute")]
     #[account(13, name="system_program", desc="The system program")]
     #[account(14, name="spl_associated_token_account", desc="The associated token account program")]
-    #[account(15, name="tpl_token", desc="The spl token program")]
+    #[account(15, name="tpl_token", desc="The tpl token program")]
     #[account(16, name="token_metadata_program", desc="The token metadata program")]
     #[account(17, name="sysvar_instructions", desc="Instructions sysvar account")]
     TransferOut(TransferOutArgs),

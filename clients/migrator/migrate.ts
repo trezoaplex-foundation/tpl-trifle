@@ -39,9 +39,9 @@ program
       connection = new Connection(clusterApiUrl(env));
     }
 
-    const metaplex = new Trezoaplex(connection);
+    const trezoaplex = new Trezoaplex(connection);
 
-    await getTraitManifest(await getMintlist(metaplex, collectionId));
+    await getTraitManifest(await getMintlist(trezoaplex, collectionId));
   });
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

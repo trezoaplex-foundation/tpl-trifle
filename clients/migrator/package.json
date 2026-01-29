@@ -2,7 +2,7 @@
     "name": "escrow-cli",
     "version": "0.0.1",
     "main": "migrate.ts",
-    "repository": "git@github.com:trezoaplex-foundation/metaplex-program-library.git",
+    "repository": "git@github.com:trezoaplex-foundation/trezoaplex-program-library.git",
     "author": "blockiosaurus <blockiosaurus@gmail.com>",
     "scripts": {
         "start": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",

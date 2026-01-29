@@ -101,20 +101,20 @@ create
   .action(async (directory, cmd) => {
     const { keypair, env, rpc, name, schema } = cmd.opts();
 
-    const metaplex = await use_metaplex(keypair, env, rpc);
+    const trezoaplex = await use_metaplex(keypair, env, rpc);
 
     const modelAddr = await createConstraintModel(
-      metaplex.connection,
+      trezoaplex.connection,
       new Keypair({
-        publicKey: metaplex.identity().publicKey.toBuffer(),
-        secretKey: metaplex.identity().secretKey as Uint8Array,
+        publicKey: trezoaplex.identity().publicKey.toBuffer(),
+        secretKey: trezoaplex.identity().secretKey as Uint8Array,
       }),
       name,
       schema,
     );
 
     // console.log("Constraint Model Created!");
-    await showModel(metaplex.connection, modelAddr);
+    await showModel(trezoaplex.connection, modelAddr);
   });
 
 create
@@ -142,12 +142,12 @@ create
     const { keypair, env, rpc, mint, create, uri, name, modelName } = cmd
       .opts();
 
-    const metaplex = await use_metaplex(keypair, env, rpc);
+    const trezoaplex = await use_metaplex(keypair, env, rpc);
 
     let nft: NftWithToken | Nft | SftWithToken | Sft;
     if (create) {
       // Create a new base NFT.
-      const { nft: newNFT } = await metaplex
+      const { nft: newNFT } = await trezoaplex
         .nfts()
         .create({
           uri,
@@ -157,11 +157,11 @@ create
         .run();
       nft = newNFT;
     } else {
-      const ownerAccounts = await metaplex.connection.getTokenLargestAccounts(new web3.PublicKey(mint));
-      const ownerInfo = await metaplex.connection.getParsedAccountInfo(ownerAccounts.value[0].address);
+      const ownerAccounts = await trezoaplex.connection.getTokenLargestAccounts(new web3.PublicKey(mint));
+      const ownerInfo = await trezoaplex.connection.getParsedAccountInfo(ownerAccounts.value[0].address);
       const tokenOwner = new web3.PublicKey((ownerInfo?.value?.data as web3.ParsedAccountData).parsed?.info?.owner);
 
-      nft = await metaplex
+      nft = await trezoaplex
         .nfts()
         .findByMint({
           mintAddress: new web3.PublicKey(mint),
@@ -171,17 +171,17 @@ create
     }
 
     const trifleAddr = await createTrifle(
-      metaplex.connection,
+      trezoaplex.connection,
       nft as NftWithToken,
       new Keypair({
-        publicKey: metaplex.identity().publicKey.toBuffer(),
-        secretKey: metaplex.identity().secretKey as Uint8Array,
+        publicKey: trezoaplex.identity().publicKey.toBuffer(),
+        secretKey: trezoaplex.identity().secretKey as Uint8Array,
       }),
       modelName,
     );
 
     // console.log("Trifle Created!");
-    await showTrifle(metaplex.connection, trifleAddr);
+    await showTrifle(trezoaplex.connection, trifleAddr);
   });
 
 const constraintCommand = create.command("constraint");
@@ -220,21 +220,21 @@ const addNoneConstraintCommand = constraintCommand
       tokenLimit,
     } = cmd.opts();
 
-    const metaplex = await use_metaplex(keypair, env, rpc);
+    const trezoaplex = await use_metaplex(keypair, env, rpc);
     const [modelAddress] = await findEscrowConstraintModelPda(
-      metaplex.identity().publicKey,
+      trezoaplex.identity().publicKey,
       modelName,
     );
 
     const adaptedKeypair = new Keypair({
-      publicKey: metaplex.identity().publicKey.toBuffer(),
-      secretKey: metaplex.identity().secretKey as Uint8Array,
+      publicKey: trezoaplex.identity().publicKey.toBuffer(),
+      secretKey: trezoaplex.identity().secretKey as Uint8Array,
     });
 
     const te = useTransferEffects(cmd.opts());
 
     await addNoneConstraint(
-      metaplex.connection,
+      trezoaplex.connection,
       adaptedKeypair,
       constraintName,
       tokenLimit,
@@ -242,7 +242,7 @@ const addNoneConstraintCommand = constraintCommand
       modelAddress,
     );
 
-    await showModel(metaplex.connection, modelAddress);
+    await showModel(trezoaplex.connection, modelAddress);
   });
 
 const addCollectionConstraintCommand = constraintCommand
@@ -274,22 +274,22 @@ const addCollectionConstraintCommand = constraintCommand
       tokenLimit,
     } = cmd.opts();
 
-    const metaplex = await use_metaplex(keypair, env, rpc);
+    const trezoaplex = await use_metaplex(keypair, env, rpc);
     const [modelAddress] = await findEscrowConstraintModelPda(
-      metaplex.identity().publicKey,
+      trezoaplex.identity().publicKey,
       modelName,
     );
 
     const adaptedKeypair = new Keypair({
-      publicKey: metaplex.identity().publicKey.toBuffer(),
-      secretKey: metaplex.identity().secretKey as Uint8Array,
+      publicKey: trezoaplex.identity().publicKey.toBuffer(),
+      secretKey: trezoaplex.identity().secretKey as Uint8Array,
     });
 
     const collectionMint = new web3.PublicKey(collection);
     const te = useTransferEffects(cmd.opts());
 
     await addCollectionConstraint(
-      metaplex.connection,
+      trezoaplex.connection,
       adaptedKeypair,
       constraintName,
       tokenLimit,
@@ -298,7 +298,7 @@ const addCollectionConstraintCommand = constraintCommand
       modelAddress,
     );
 
-    await showModel(metaplex.connection, modelAddress);
+    await showModel(trezoaplex.connection, modelAddress);
   });
 
 const addTokensConstraintCommand = constraintCommand
@@ -354,22 +354,22 @@ const addTokensConstraintCommand = constraintCommand
       process.exit(1);
     }
 
-    const metaplex = await use_metaplex(keypair, env, rpc);
+    const trezoaplex = await use_metaplex(keypair, env, rpc);
     const [modelAddress] = await findEscrowConstraintModelPda(
-      metaplex.identity().publicKey,
+      trezoaplex.identity().publicKey,
       modelName,
     );
 
     const adaptedKeypair = new Keypair({
-      publicKey: metaplex.identity().publicKey.toBuffer(),
-      secretKey: metaplex.identity().secretKey as Uint8Array,
+      publicKey: trezoaplex.identity().publicKey.toBuffer(),
+      secretKey: trezoaplex.identity().secretKey as Uint8Array,
     });
     // TODO: batch process this.
 
     const te = useTransferEffects(cmd.opts());
 
     await addTokensConstraint(
-      metaplex.connection,
+      trezoaplex.connection,
       adaptedKeypair,
       constraintName,
       tokenLimit,
@@ -378,7 +378,7 @@ const addTokensConstraintCommand = constraintCommand
       modelAddress,
     );
 
-    await showModel(metaplex.connection, modelAddress);
+    await showModel(trezoaplex.connection, modelAddress);
   });
 
 addTransferEffectsOptions(addNoneConstraintCommand);
@@ -419,16 +419,16 @@ transfer
     const { keypair, env, rpc, mint, modelName, attributeMint, amount, slot, creator } =
       cmd.opts();
 
-    const metaplex = await use_metaplex(keypair, env, rpc);
+    const trezoaplex = await use_metaplex(keypair, env, rpc);
     const adaptedKeypair = new Keypair({
-      publicKey: metaplex.identity().publicKey.toBuffer(),
-      secretKey: metaplex.identity().secretKey as Uint8Array,
+      publicKey: trezoaplex.identity().publicKey.toBuffer(),
+      secretKey: trezoaplex.identity().secretKey as Uint8Array,
     });
 
     const creatorAddr = new web3.PublicKey(creator);
 
     const modelAddr = await findEscrowConstraintModelPda(
-      metaplex.identity().publicKey,
+      trezoaplex.identity().publicKey,
       modelName,
     );
     const trifleAddr = await findTriflePda(
@@ -442,10 +442,10 @@ transfer
       trifleAddr[0],
     );
 
-    const ownerAccounts = await metaplex.connection.getTokenLargestAccounts(new web3.PublicKey(mint));
-    const ownerInfo = await metaplex.connection.getParsedAccountInfo(ownerAccounts.value[0].address);
+    const ownerAccounts = await trezoaplex.connection.getTokenLargestAccounts(new web3.PublicKey(mint));
+    const ownerInfo = await trezoaplex.connection.getParsedAccountInfo(ownerAccounts.value[0].address);
     const tokenOwner = new web3.PublicKey((ownerInfo?.value?.data as web3.ParsedAccountData).parsed?.info?.owner);
-    const escrowNft = await metaplex
+    const escrowNft = await trezoaplex
       .nfts()
       .findByMint({
         mintAddress: new web3.PublicKey(mint),
@@ -453,7 +453,7 @@ transfer
       })
       .run();
     // console.log('Escrow NFT: ', escrowNft);
-    const attributeToken = await metaplex
+    const attributeToken = await trezoaplex
       .nfts()
       .findByMint({
         mintAddress: new web3.PublicKey(attributeMint),
@@ -472,7 +472,7 @@ transfer
     }
     // console.log('Attribute Token: ', attributeToken);
     await transferIn(
-      metaplex.connection,
+      trezoaplex.connection,
       escrowNft as NftWithToken,
       escrowAddr[0],
       attribute,
@@ -481,7 +481,7 @@ transfer
       slot,
     );
 
-    await showTrifle(metaplex.connection, trifleAddr[0]);
+    await showTrifle(trezoaplex.connection, trifleAddr[0]);
   });
 
 transfer
@@ -516,16 +516,16 @@ transfer
     const { keypair, env, rpc, mint, modelName, attributeMint, amount, slot, creator } =
       cmd.opts();
 
-    const metaplex = await use_metaplex(keypair, env, rpc);
+    const trezoaplex = await use_metaplex(keypair, env, rpc);
     const adaptedKeypair = new Keypair({
-      publicKey: metaplex.identity().publicKey.toBuffer(),
-      secretKey: metaplex.identity().secretKey as Uint8Array,
+      publicKey: trezoaplex.identity().publicKey.toBuffer(),
+      secretKey: trezoaplex.identity().secretKey as Uint8Array,
     });
 
     const creatorAddr = new web3.PublicKey(creator);
 
     const modelAddr = await findEscrowConstraintModelPda(
-      metaplex.identity().publicKey,
+      trezoaplex.identity().publicKey,
       modelName,
     );
     const trifleAddr = await findTriflePda(
@@ -539,11 +539,11 @@ transfer
       trifleAddr[0],
     );
 
-    const ownerAccounts = await metaplex.connection.getTokenLargestAccounts(new web3.PublicKey(mint));
-    const ownerInfo = await metaplex.connection.getParsedAccountInfo(ownerAccounts.value[0].address);
+    const ownerAccounts = await trezoaplex.connection.getTokenLargestAccounts(new web3.PublicKey(mint));
+    const ownerInfo = await trezoaplex.connection.getParsedAccountInfo(ownerAccounts.value[0].address);
     const tokenOwner = new web3.PublicKey((ownerInfo?.value?.data as web3.ParsedAccountData).parsed?.info?.owner);
 
-    const escrowNft = await metaplex
+    const escrowNft = await trezoaplex
       .nfts()
       .findByMint({
         mintAddress: new web3.PublicKey(mint),
@@ -551,7 +551,7 @@ transfer
       })
       .run();
     // console.log('Escrow NFT: ', escrowNft);
-    const attributeToken = await metaplex
+    const attributeToken = await trezoaplex
       .nfts()
       .findByMint({
         mintAddress: new web3.PublicKey(attributeMint),
@@ -570,7 +570,7 @@ transfer
     }
     // console.log('Attribute Token: ', attributeToken);
     await transferOut(
-      metaplex.connection,
+      trezoaplex.connection,
       escrowNft as NftWithToken,
       escrowAddr[0],
       attribute,
@@ -579,7 +579,7 @@ transfer
       slot,
     );
 
-    await showTrifle(metaplex.connection, trifleAddr[0]);
+    await showTrifle(trezoaplex.connection, trifleAddr[0]);
   });
 
 const show = program.command("show");
@@ -598,13 +598,13 @@ show
   .action(async (directory, cmd) => {
     const { keypair, env, rpc, name } = cmd.opts();
 
-    const metaplex = await use_metaplex(keypair, env, rpc);
+    const trezoaplex = await use_metaplex(keypair, env, rpc);
 
     const modelAddr = await findEscrowConstraintModelPda(
-      metaplex.identity().publicKey,
+      trezoaplex.identity().publicKey,
       name,
     );
-    await showModel(metaplex.connection, modelAddr[0]);
+    await showModel(trezoaplex.connection, modelAddr[0]);
   });
 
 show
@@ -628,17 +628,17 @@ show
   .action(async (directory, cmd) => {
     const { keypair, env, rpc, mint, modelName } = cmd.opts();
 
-    const metaplex = await use_metaplex(keypair, env, rpc);
+    const trezoaplex = await use_metaplex(keypair, env, rpc);
 
     const modelAddr = await findEscrowConstraintModelPda(
-      metaplex.identity().publicKey,
+      trezoaplex.identity().publicKey,
       modelName,
     );
     const trifleAddr = await findTriflePda(
       new web3.PublicKey(mint),
-      metaplex.identity().publicKey,
+      trezoaplex.identity().publicKey,
     );
-    await showTrifle(metaplex.connection, trifleAddr[0]);
+    await showTrifle(trezoaplex.connection, trifleAddr[0]);
   });
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

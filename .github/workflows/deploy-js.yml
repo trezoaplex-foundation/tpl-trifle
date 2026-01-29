@@ -53,13 +53,13 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install Node.js
-        uses: metaplex-foundation/actions/install-node-with-pnpm@v1
+        uses: trezoaplex-foundation/actions/install-node-with-pnpm@v1
         with:
           version: ${{ vars.NODE_VERSION }}
           cache: ${{ env.CACHE }}
 
       - name: Install dependencies
-        uses: metaplex-foundation/actions/install-node-dependencies@v1
+        uses: trezoaplex-foundation/actions/install-node-dependencies@v1
         with:
           folder: ./clients/js
           cache: ${{ env.CACHE }}

@@ -50,7 +50,7 @@ export const TransferOutStruct = new beet.FixableBeetArgsStruct<
  * @property [_writable_] attributeDstTokenAccount The token account the attribute is being transferred to
  * @property [] attributeMetadata The metadata of the attribute
  * @property [] splAssociatedTokenAccount The associated token account program
- * @property [] splToken The spl token program
+ * @property [] splToken The tpl token program
  * @property [] tokenMetadataProgram The token metadata program
  * @property [] sysvarInstructions Instructions sysvar account
  * @category Instructions

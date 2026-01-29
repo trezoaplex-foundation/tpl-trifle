@@ -70,7 +70,7 @@ const setMintCache = (collectionId: String, nftList: Nft[]) => {
     fs.writeFileSync(filename, JSON.stringify(nftList, null, 2));
 }
 
-export const getMintlist = async (metaplex: Trezoaplex, collectionId: String) => {
+export const getMintlist = async (trezoaplex: Trezoaplex, collectionId: String) => {
     let mintlist = getMintCache(collectionId);
     if (!mintlist) {
         const url = URL_BASE + process.env.HELIUS_API_KEY;
@@ -86,11 +86,11 @@ export const getMintlist = async (metaplex: Trezoaplex, collectionId: String) =>
         // console.log("Mintlist: ", data.result);
         // console.log(data.result[0].mint);
         let mintlist = data.result.map((data: any) => new PublicKey(data.mint));
-        let metadatas = await metaplex.nfts().findAllByMintList({ mints: mintlist });
+        let metadatas = await trezoaplex.nfts().findAllByMintList({ mints: mintlist });
         // console.log("Metadatas: ", metadatas);
         let count = 0;
         let nftList = await Promise.all(metadatas.map((metadata) => {
-            return metaplex.nfts().load({ metadata: metadata as Metadata }) as Promise<Nft>
+            return trezoaplex.nfts().load({ metadata: metadata as Metadata }) as Promise<Nft>
         }));
         
         setMintCache(collectionId, nftList);
