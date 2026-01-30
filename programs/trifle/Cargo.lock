@@ -1931,7 +1931,7 @@ dependencies = [
  "num-traits",
  "shank 0.0.11",
  "trezoa-program",
- "spl-associated-token-account",
+ "tpl-associated-token-account",
  "tpl-token",
  "thiserror",
 ]
@@ -1960,7 +1960,7 @@ dependencies = [
  "trezoa-program",
  "trezoa-program-test",
  "trezoa-sdk",
- "spl-associated-token-account",
+ "tpl-associated-token-account",
  "tpl-token",
  "thiserror",
 ]
@@ -4131,8 +4131,8 @@ dependencies = [
  "trezoa-account-decoder",
  "trezoa-address-lookup-table-program",
  "trezoa-sdk",
- "spl-associated-token-account",
- "spl-memo",
+ "tpl-associated-token-account",
+ "tpl-memo",
  "tpl-token",
  "tpl-token-2022",
  "thiserror",
@@ -4274,7 +4274,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "spl-associated-token-account"
+name = "tpl-associated-token-account"
 version = "1.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fbc000f0fdf1f12f99d77d398137c1751345b18c88258ce0f99b7872cf6c9bd6"
@@ -4290,7 +4290,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "spl-memo"
+name = "tpl-memo"
 version = "3.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bd0dc6f70db6bacea7ff25870b016a65ba1d1b6013536f08e4fd79a8f9005325"
@@ -4326,7 +4326,7 @@ dependencies = [
  "num_enum",
  "trezoa-program",
  "trezoa-zk-token-sdk",
- "spl-memo",
+ "tpl-memo",
  "tpl-token",
  "thiserror",
 ]
